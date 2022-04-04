@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+	<ribbon>
+		<tabs>
+			<tab id="HZToolbar" label="H&amp;Z Toolbar">
+
+
+				<group id="text_actions" getLabel="GetLabel">
+					<button id="swap_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+
+					<button id="change_language_en" tag="change_language:en" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+				</group>
+
+				<group id="shape_actions" getLabel="GetLabel" >
+					<splitButton id="change_shape_actions">
+						<button id="change_shape_repeat" imageMso="ShapesMoreShapes"/>
+
+						<menu id="change_shape_type" getLabel="GetLabel" imageMso="ShapesMoreShapes" >
+							<button id="change_to_rectangle" tag="change_shape_type:Rectangle" imageMso="ShapeRectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false"  />
+							<button id="change_to_roundedrectangle" tag="change_shape_type:RoundedRectangle" imageMso="ShapeRoundedRectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+
+							<button id="change_to_isoscelestriangle" tag="change_shape_type:IsoscelesTriangle" imageMso="ShapeIsoscelesTriangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_oval" tag="change_shape_type:Oval" imageMso="ShapeOval" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_smilyface" tag="change_shape_type:SmileyFace" imageMso="ShapeSmileyFace" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_donut" tag="change_shape_type:Donut" imageMso="ShapeDonut" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_heart" tag="change_shape_type:Heart" imageMso="ShapeHeart" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_rightarrow" tag="change_shape_type:RightArrow" imageMso="ShapeRightArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_leftarrow" tag="change_shape_type:LeftArrow" imageMso="ShapeLeftArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_uparrow" tag="change_shape_type:UpArrow" imageMso="ShapeUpArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_downarrow" tag="change_shape_type:DownArrow" imageMso="ShapeDownArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+
+							<button id="change_to_roundedrectangularcallout" tag="change_shape_type:RoundedRectangularCallout" imageMso="ShapeRoundedRectangularCallout" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_start" tag="change_shape_type:5pointStar" imageMso="ShapeStar" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_seal8" tag="change_shape_type:8pointStar" imageMso="ShapeSeal8" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_seal16" tag="change_shape_type:16pointStar" imageMso="ShapeSeal16" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+							<button id="change_to_seal24" tag="change_shape_type:24pointStar" imageMso="ShapeSeal24" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
+						</menu>
+					</splitButton>
+
+
+
+
+
+
+					<separator id="shape_actions_size_separator"/>
+
+
+					<button id="harmonize_shape_width" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<button id="harmonize_shape_height" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<button id="harmonize_shape_size" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+
+					<button id="harmonize_adjustments" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+
+					<separator id="shape_actions_split_separator"/>
+
+					<button id="split_rectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+				</group>
+
+				<group id="arrange_actions" getLabel="GetLabel">
+					<button id="arrange_horizontal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<button id="arrange_vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<button id="arrange_magnet" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<dialogBoxLauncher>
+						<button id="arrange_settings" onAction="OnArrangeSettingsOpen"/>
+					</dialogBoxLauncher>
+				</group>
+
+				<group id="guideline_actions" getLabel="GetLabel">
+					<button id="align_guide_top" tag="align_guide:top" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="align_guide_bottom" tag="align_guide:bottom" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="align_guide_left" tag="align_guide:left" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="align_guide_right" tag="align_guide:right" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+
+					<separator id="guideline_actions_separator"/>
+
+					<button id="horizontal_resize_guide" tag="resize_guide:horizontal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="vertical_resize_guide" tag="resize_guide:vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+				</group>
+
+				<group id="color_actions" getLabel="GetLabel">
+					<button id="apply_background_dark1_theme_color" tag="apply_background_theme_color:dark1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_light1_theme_color" tag="apply_background_theme_color:light1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_dark2_theme_color" tag="apply_background_theme_color:dark2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_light2_theme_color" tag="apply_background_theme_color:light2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+
+					<separator id="color_actions_background_accent_separator"/>
+
+					<button id="apply_background_accent1_theme_color" tag="apply_background_theme_color:accent1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_accent2_theme_color" tag="apply_background_theme_color:accent2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_accent3_theme_color" tag="apply_background_theme_color:accent3" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_accent4_theme_color" tag="apply_background_theme_color:accent4" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_accent5_theme_color" tag="apply_background_theme_color:accent5" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_background_accent6_theme_color" tag="apply_background_theme_color:accent6" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+
+					<separator id="color_actions_foreground_separator"/>
+
+					<button id="apply_line_dark1_theme_color" tag="apply_line_theme_color:dark1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_light1_theme_color" tag="apply_line_theme_color:light1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_dark2_theme_color" tag="apply_line_theme_color:dark2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_light2_theme_color" tag="apply_line_theme_color:light2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+
+					<separator id="color_actions_foreground_accent_separator"/>
+
+					<button id="apply_line_accent1_theme_color" tag="apply_line_theme_color:accent1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_accent2_theme_color" tag="apply_line_theme_color:accent2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_accent3_theme_color" tag="apply_line_theme_color:accent3" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_accent4_theme_color" tag="apply_line_theme_color:accent4" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_accent5_theme_color" tag="apply_line_theme_color:accent5" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+					<button id="apply_line_accent6_theme_color" tag="apply_line_theme_color:accent6" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+				</group>
+			</tab>
+		</tabs>
+	</ribbon>
+</customUI>
+
