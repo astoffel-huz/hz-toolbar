@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Office = Microsoft.Office.Core;
+using System.Drawing;
 
 namespace hztoolbar.actions
 {
@@ -204,6 +205,26 @@ namespace hztoolbar.actions
 
         }.ToImmutableDictionary();
 
+        public static readonly ImmutableDictionary<string, string> MSO_IMAGES = new Dictionary<string, string>()
+        {
+            ["Rectangle"] = "ShapeRectangle",
+            ["RoundedRectangle"] = "ShapeRoundedRectangle",
+            ["IsoscelesTriangle"] = "ShapeIsoscelesTriangle",
+            ["Oval"] = "ShapeOval",
+            ["SmileyFace"] = "ShapeSmileyFace",
+            ["Donut"] = "ShapeDonut",
+            ["Heart"] = "ShapeHeart",
+            ["RightArrow"] = "ShapeRightArrow",
+            ["LeftArrow"] = "ShapeLeftArrow",
+            ["UpArrow"] = "ShapeUpArrow",
+            ["DownArrow"] = "ShapeDownArrow",
+            ["RoundedRectangularCallout"] = "ShapeRoundedRectangularCallout",
+            ["5pointStar"] = "ShapeStar",
+            ["8pointStar"] = "ShapeSeal8",
+            ["16pointStar"] = "ShapeSeal16",
+            ["24pointStar"] = "ShapeSeal24",
+        }.ToImmutableDictionary();
+
         public ChangeAutoShapeType() : base("change_shape_type")
         {
         }
@@ -221,8 +242,23 @@ namespace hztoolbar.actions
         {
             return from shape in base.GetSelectedShapes()
                    where shape.Type == Office.MsoShapeType.msoAutoShape
-                   where shape.AutoShapeType != Office.MsoAutoShapeType.msoShapeMixed 
+                   where shape.AutoShapeType != Office.MsoAutoShapeType.msoShapeMixed
                    select shape;
+        }
+
+        public override Bitmap? GetImage(string controlId, string arg = "")
+        {
+            var result = Utils.LoadImageResource($"hztoolbar.icons.{controlId}.png");
+            return result;
+        }
+
+        public override string? GetMsoImage(string controlId, string arg = "")
+        {
+            if (MSO_IMAGES.TryGetValue(arg, out var result))
+            {
+                return result;
+            }
+            return null;
         }
 
         public override bool IsEnabled(string arg = "")
@@ -234,7 +270,7 @@ namespace hztoolbar.actions
             return GetSelectedShapes().Take(1).Count() > 0;
         }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapeType = GetShapeType(arg);
             if (shapeType != null)
@@ -244,7 +280,79 @@ namespace hztoolbar.actions
                     shape.AutoShapeType = shapeType.Value;
                 }
             }
+            Properties.Settings.Default.change_shape_type = arg;
+            Properties.Settings.Default.Save();
+            return true;
         }
     }
 
+
+    public class RepeatLastChangeAction : ToolbarAction
+    {
+
+        private readonly ChangeAutoShapeType changeAction = new ChangeAutoShapeType();
+
+        public RepeatLastChangeAction() : base("repeat_last_shape_change")
+        {
+
+        }
+
+        public override Bitmap? GetImage(string controlId, string arg = "")
+        {
+            return changeAction.GetImage(controlId, Properties.Settings.Default.change_shape_type);
+        }
+
+        public override string? GetMsoImage(string controlId, string arg = "")
+        {
+            return changeAction.GetMsoImage(controlId, Properties.Settings.Default.change_shape_type);
+        }
+
+        public override bool IsEnabled(string arg = "")
+        {
+            return changeAction.IsEnabled(Properties.Settings.Default.change_shape_type);
+        }
+
+        public override bool Run(string arg = "")
+        {
+            changeAction.Run(Properties.Settings.Default.change_shape_type);
+            return false;
+        }
+    }
+
+
+    public class CopyShapeTypeAction : ToolbarAction
+    {
+        public CopyShapeTypeAction() : base("copy_shape_type") { }
+
+        protected override IEnumerable<PowerPoint.Shape> GetSelectedShapes()
+        {
+            return (
+                from shape in base.GetSelectedShapes()
+                where shape.Type == Office.MsoShapeType.msoAutoShape
+                where shape.AutoShapeType != Office.MsoAutoShapeType.msoShapeMixed
+                select shape
+            ).ToList();
+        }
+
+        public override bool IsEnabled(string arg = "")
+        {
+            return GetSelectedShapes().Take(2).Count() > 0;
+        }
+
+        public override bool Run(string arg = "")
+        {
+            var shapes = GetSelectedShapes().ToList();
+            if (shapes.Count > 1) {
+                var reference = shapes[0];
+                foreach (var shape in shapes)
+                {
+                    if (shape == reference) {
+                        continue;
+                    }
+                    shape.AutoShapeType = reference.AutoShapeType;
+                }
+            }
+            return true;
+        }
+    }
 }

@@ -8,7 +8,39 @@ using System.Collections.Generic;
 namespace hztoolbar.actions
 {
 
-    public class AlignGuideAction : ToolbarAction
+
+    public abstract class AbstractGuideAction : ToolbarAction
+    {
+
+        protected AbstractGuideAction(string id) : base(id) { }
+
+        protected IEnumerable<PowerPoint.Guide> EnumerateGuides(PowerPoint.PpGuideOrientation? orientation)
+        {
+            var slide = Utils.GetActiveSlide();
+            if (slide == null)
+            {
+                return Enumerable.Empty<PowerPoint.Guide>();
+            }
+
+            var application = Globals.ThisAddIn.Application;
+            var presentation = application.ActiveWindow.Presentation;
+            var presentationGuides = presentation.Guides;
+            var masterGuides = slide.Master.Guides;
+            if (presentationGuides == null || masterGuides == null)
+            {
+                return Enumerable.Empty<PowerPoint.Guide>();
+            }
+            return from PowerPoint.Guide guide in Enumerable.Concat<PowerPoint.Guide>(
+                from PowerPoint.Guide guide in presentationGuides select guide,
+                from PowerPoint.Guide guide in masterGuides select guide
+                )
+                   where guide.Orientation == orientation
+                   select guide;
+        }
+
+    }
+
+    public class AlignGuideAction : AbstractGuideAction
     {
 
         private const string TOP = "top";
@@ -30,15 +62,6 @@ namespace hztoolbar.actions
             };
         }
 
-        private IEnumerable<PowerPoint.Guide> EnumerateGuides(PowerPoint.PpGuideOrientation? orientation)
-        {
-            var application = Globals.ThisAddIn.Application;
-            var presentation = application.ActiveWindow.Presentation;
-            return from PowerPoint.Guide guide in presentation.Guides
-                   where guide.Orientation == orientation
-                   select guide;
-        }
-
         public override bool IsEnabled(string arg = "")
         {
             var shapes = GetSelectedShapes();
@@ -48,7 +71,7 @@ namespace hztoolbar.actions
                 && guides.Take(1).Count() > 0;
         }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
             var guides = (
@@ -59,13 +82,13 @@ namespace hztoolbar.actions
 
             if (shapes.Count == 0 || guides.Count == 0)
             {
-                return;
+                return false;
             }
 
             if (arg == TOP)
             {
                 var minTop = shapes.Min(it => it.Top);
-                var guide = guides.FindLast(it => it.Position < minTop);
+                var guide = Utils.FloorItem(minTop, guides, it => it.Position);
                 if (guide == null)
                 {
                     guide = guides[0];
@@ -78,7 +101,7 @@ namespace hztoolbar.actions
             else if (arg == BOTTOM)
             {
                 var maxBottom = shapes.Max(it => it.Top + it.Height);
-                var guide = guides.Find(it => it.Position > maxBottom);
+                var guide = Utils.CeilingItem(maxBottom, guides, it => it.Position);
                 if (guide == null)
                 {
                     guide = guides[guides.Count - 1];
@@ -91,7 +114,7 @@ namespace hztoolbar.actions
             else if (arg == LEFT)
             {
                 var minLeft = shapes.Min(it => it.Left);
-                var guide = guides.FindLast(it => it.Position < minLeft);
+                var guide = Utils.FloorItem(minLeft, guides, it => it.Position);
                 if (guide == null)
                 {
                     guide = guides[0];
@@ -104,7 +127,7 @@ namespace hztoolbar.actions
             else if (arg == RIGHT)
             {
                 var maxRight = shapes.Min(it => it.Left + it.Width);
-                var guide = guides.Find(it => it.Position > maxRight);
+                var guide = Utils.CeilingItem(maxRight, guides, it => it.Position);
                 if (guide == null)
                 {
                     guide = guides[guides.Count - 1];
@@ -114,10 +137,11 @@ namespace hztoolbar.actions
                     shape.Left = guide.Position - shape.Width;
                 }
             }
+            return false;
         }
     }
 
-    public class ResizeToGuideAction : ToolbarAction
+    public class ResizeToGuideAction : AbstractGuideAction
     {
         public const string HORIZONTAL = "horizontal";
         public const string VERTICAL = "vertical";
@@ -134,96 +158,81 @@ namespace hztoolbar.actions
             };
         }
 
-        private IEnumerable<PowerPoint.Guide> EnumerateGuides(PowerPoint.PpGuideOrientation? orientation)
+        private (PowerPoint.Guide First, PowerPoint.Guide Last)? FindGuides(string arg, List<PowerPoint.Shape> shapes)
         {
-            var application = Globals.ThisAddIn.Application;
-            var presentation = application.ActiveWindow.Presentation;
-            var slide = Utils.GetActiveSlide();
-            if (slide == null)
+            if (shapes.Count < 1)
             {
-                return Enumerable.Empty<PowerPoint.Guide>();
+                return null;
             }
-            var presentationGuides = presentation.Guides;
-            var masterGuides = slide.Master.Guides;
-            if (presentationGuides == null || masterGuides == null)
+            var guides = (
+                from guide in EnumerateGuides(GetOrientation(arg))
+                orderby guide.Position
+                select guide
+               ).ToList();
+            if (guides.Count < 2)
             {
-                return Enumerable.Empty<PowerPoint.Guide>();
+                return null;
             }
-            return from PowerPoint.Guide guide in Enumerable.Concat<PowerPoint.Guide>(
-                from PowerPoint.Guide guide in presentationGuides select guide, 
-                from PowerPoint.Guide guide in masterGuides select guide
-                )
-                   where guide.Orientation == orientation
-                   select guide;
-
+            (float min, float max)? extrema = arg switch
+            {
+                HORIZONTAL => (shapes.Min(it => it.Left), shapes.Max(it => it.Left + it.Width)),
+                VERTICAL => (shapes.Min(it => it.Top), shapes.Max(it => it.Top + it.Height)),
+                _ => null
+            };
+            if (extrema == null) { return null; }
+            var result = (
+                Utils.FloorItem(extrema.Value.min, guides, it => it.Position),
+                Utils.CeilingItem(extrema.Value.max, guides, it => it.Position)
+                );
+            if (result.Item1 == null)
+            {
+                result.Item1 = guides[0];
+            }
+            if (result.Item2 == null)
+            {
+                result.Item2 = guides[guides.Count - 1];
+            }
+            if (result.Item1.Position == result.Item2.Position)
+            {
+                return null;
+            }
+            return (result.Item1, result.Item2);
         }
-
 
         public override bool IsEnabled(string arg = "")
         {
-            var guides = EnumerateGuides(GetOrientation(arg)).ToList();
             var shapes = GetSelectedShapes().ToList();
-
-            if (guides.Count < 2 || shapes.Count == 0)
-            {
-                return false;
-            }
-
-            (float min, float max)? extrema = arg switch
-            {
-                HORIZONTAL => (shapes.Min(it => it.Left), shapes.Max(it => it.Left + it.Width)),
-                VERTICAL => (shapes.Min(it => it.Top), shapes.Max(it => it.Top + it.Height)),
-                _ => null
-            };
-
-            if (extrema == null)
-            {
-                return false;
-            }
-
-            return guides.Any(it => it.Position <= extrema.Value.min) && guides.Any(it => extrema.Value.max <= it.Position);
+            var guides = FindGuides(arg, shapes);
+            return guides != null;
         }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
-            var guides = EnumerateGuides(GetOrientation(arg)).ToList();
             var shapes = GetSelectedShapes().ToList();
+            var guides = FindGuides(arg, shapes);
 
-            (float min, float max)? extrema = arg switch
+            if (guides != null)
             {
-                HORIZONTAL => (shapes.Min(it => it.Left), shapes.Max(it => it.Left + it.Width)),
-                VERTICAL => (shapes.Min(it => it.Top), shapes.Max(it => it.Top + it.Height)),
-                _ => null
-            };
-
-            if (extrema != null)
-            {
-                guides.Sort((a, b) => a.Position < b.Position ? -1 : a.Position == b.Position ? 0 : 1);
-                var lowGuide = guides.FindLast(it => it.Position <= extrema.Value.min);
-                var highGuide = guides.Find(it => extrema.Value.max <= it.Position);
-                if (lowGuide != null && highGuide != null)
+                var low = guides.Value.First.Position;
+                var size = guides.Value.Last.Position - low;
+                if (arg == HORIZONTAL)
                 {
-                    var low = lowGuide.Position;
-                    var size = highGuide.Position - low;
-                    if (arg == HORIZONTAL)
+                    foreach (var shape in shapes)
                     {
-                        foreach (var shape in shapes)
-                        {
-                            shape.Left = low;
-                            shape.Width = size;
-                        }
+                        shape.Left = low;
+                        shape.Width = size;
                     }
-                    else if (arg == VERTICAL)
+                }
+                else if (arg == VERTICAL)
+                {
+                    foreach (var shape in shapes)
                     {
-                        foreach (var shape in shapes)
-                        {
-                            shape.Top = low;
-                            shape.Height = size;
-                        }
+                        shape.Top = low;
+                        shape.Height = size;
                     }
                 }
             }
-
+            return false;
         }
     }
 

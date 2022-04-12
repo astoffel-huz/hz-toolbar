@@ -192,8 +192,23 @@
   <data name="arrange_actions_label" xml:space="preserve">
     <value>Arrange shapes</value>
   </data>
+  <data name="arrange_grid_control_label" xml:space="preserve">
+    <value>To Grid (Interactive)</value>
+  </data>
   <data name="arrange_grid_label" xml:space="preserve">
     <value>To Grid</value>
+  </data>
+  <data name="arrange_grid_large_label" xml:space="preserve">
+    <value>To Grid (large)</value>
+  </data>
+  <data name="arrange_grid_medium_label" xml:space="preserve">
+    <value>To Grid (medium)</value>
+  </data>
+  <data name="arrange_grid_none_label" xml:space="preserve">
+    <value>To Grid (none)</value>
+  </data>
+  <data name="arrange_grid_small_label" xml:space="preserve">
+    <value>To Grid (small)</value>
   </data>
   <data name="arrange_horizontal_label" xml:space="preserve">
     <value>Horizontal</value>
@@ -204,17 +219,35 @@
   <data name="arrange_shape_settings_dialog_cancel_label" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="arrange_shape_settings_dialog_close_label" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="arrange_shape_settings_dialog_gutter_label" xml:space="preserve">
+    <value>Gutter</value>
+  </data>
   <data name="arrange_shape_settings_dialog_horizontal_gutter_label" xml:space="preserve">
     <value>Horizontal gutter</value>
   </data>
+  <data name="arrange_shape_settings_dialog_horizontal_label" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
   <data name="arrange_shape_settings_dialog_ok_label" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="arrange_shape_settings_dialog_resize_label" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="arrange_shape_settings_dialog_save_label" xml:space="preserve">
+    <value>Close &amp; Save</value>
   </data>
   <data name="arrange_shape_settings_dialog_title" xml:space="preserve">
     <value>Arrange shapes</value>
   </data>
   <data name="arrange_shape_settings_dialog_vertical_gutter_label" xml:space="preserve">
     <value>Vertical gutter</value>
+  </data>
+  <data name="arrange_shape_settings_dialog_vertical_label" xml:space="preserve">
+    <value>Vertical</value>
   </data>
   <data name="arrange_vertical_label" xml:space="preserve">
     <value>Vertical</value>
@@ -225,20 +258,14 @@
   <data name="change_language_en" xml:space="preserve">
     <value>Change to English</value>
   </data>
-  <data name="change_shape_rectangle_separator" xml:space="preserve">
-    <value>Rectangle</value>
-  </data>
-  <data name="change_shape_type" xml:space="preserve">
-    <value>Change shape</value>
-  </data>
-  <data name="change_to_rectangle_label" xml:space="preserve">
-    <value>change_to_rectangle</value>
-  </data>
   <data name="clear_text_label" xml:space="preserve">
     <value>Clear text</value>
   </data>
   <data name="color_actions_label" xml:space="preserve">
     <value>Theme color</value>
+  </data>
+  <data name="copy_shape_type_label" xml:space="preserve">
+    <value>Copy type</value>
   </data>
   <data name="guideline_actions_label" xml:space="preserve">
     <value>Guidelines</value>
@@ -257,6 +284,9 @@
   </data>
   <data name="horizontal_resize_guide_label" xml:space="preserve">
     <value>Horizontal fit to guides</value>
+  </data>
+  <data name="repeat_last_shape_change_label" xml:space="preserve">
+    <value>Change Shape</value>
   </data>
   <data name="shape_actions_label" xml:space="preserve">
     <value>Shape</value>

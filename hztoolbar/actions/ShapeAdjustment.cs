@@ -31,7 +31,7 @@ namespace hztoolbar.actions
 
         
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
             if (shapes.Count > 1)
@@ -40,7 +40,7 @@ namespace hztoolbar.actions
                 if (reference.Adjustments.Count > 0
                     && !shapes.All(it => it.Adjustments.Count == reference.Adjustments.Count))
                 {
-                    return;
+                    return false;
                 }
                 foreach (var shape in shapes)
                 {
@@ -54,6 +54,7 @@ namespace hztoolbar.actions
                     }
                 }
             }
+            return false;
         }
     }
 

@@ -22,14 +22,25 @@ namespace hztoolbar.actions
     {
         private readonly Window window;
 
+		public event EventHandler ValueChanged;
+
         public ArrangeShapeControl(Window window)
         {
             InitializeComponent();
             this.window = window;
         }
-        private void onOkClick(object sender, RoutedEventArgs e)
+
+		protected virtual void OnValueChange() {
+			ValueChanged?.Invoke(this, EventArgs.Empty);
+		}
+
+        private void OnOkClickHandler(object sender, RoutedEventArgs e)
         {
             this.window.DialogResult = true;
         }
-    }
+
+		private void OnValueChangeHandler(object sender, HandyControl.Data.FunctionEventArgs<double> e) {
+			OnValueChange();
+		}
+	}
 }

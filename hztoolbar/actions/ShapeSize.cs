@@ -19,7 +19,7 @@ namespace hztoolbar.actions
 
         public HarmonizeShapeWidthAction() : base("harmonize_shape_width") { }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
             if (shapes.Count > 1)
@@ -34,6 +34,7 @@ namespace hztoolbar.actions
                     shape.Width = reference.Width;
                 }
             }
+            return false;
         }
 
     }
@@ -44,7 +45,7 @@ namespace hztoolbar.actions
 
         public HarmonizeShapeHeightAction() : base("harmonize_shape_height") { }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
             if (shapes.Count > 1)
@@ -59,6 +60,7 @@ namespace hztoolbar.actions
                     shape.Height = reference.Height;
                 }
             }
+            return false;
         }
 
     }
@@ -67,7 +69,7 @@ namespace hztoolbar.actions
 
         public HarmonizeShapeSizeAction() : base("harmonize_shape_size") { }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
             if (shapes.Count > 1)
@@ -83,6 +85,7 @@ namespace hztoolbar.actions
                     shape.Height = reference.Height;
                 }
             }
+            return false;
         }
 
     }

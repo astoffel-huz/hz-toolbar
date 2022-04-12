@@ -8,8 +8,8 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="EN.svg"
-   inkscape:export-filename="C:\Users\andreas.stoffel\source\repos\hztoolbar\hztoolbar\icons\change_language_en.png"
+   sodipodi:docname="arrange_grid-large.svg"
+   inkscape:export-filename="C:\Users\andreas.stoffel\source\repos\hztoolbar\hztoolbar\icons\arrange_grid_large.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -30,53 +30,99 @@
      scale-x="1"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="3.7946874"
-     inkscape:cx="37.5525"
-     inkscape:cy="14.362184"
-     inkscape:window-width="2560"
+     inkscape:zoom="7.589375"
+     inkscape:cx="-61.599275"
+     inkscape:cy="33.797249"
+     inkscape:window-width="3440"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer1"
+     inkscape:lockguides="true">
     <sodipodi:guide
        position="-8.4785269,10"
        orientation="0,1"
        id="guide150"
        inkscape:label=""
-       inkscape:locked="false"
+       inkscape:locked="true"
        inkscape:color="rgb(0,0,255)" />
     <sodipodi:guide
        position="9.9692569,41.63905"
        orientation="1,0"
-       id="guide209" />
+       id="guide209"
+       inkscape:locked="true" />
     <sodipodi:guide
        position="53.852621,49.0927"
        orientation="1,0"
-       id="guide211" />
+       id="guide211"
+       inkscape:locked="true" />
     <sodipodi:guide
        position="-9.2238919,18.253223"
        orientation="0,-1"
-       id="guide506" />
+       id="guide506"
+       inkscape:locked="true" />
     <sodipodi:guide
        position="28.510211,54.030743"
        orientation="0,-1"
-       id="guide508" />
+       id="guide508"
+       inkscape:locked="true" />
     <sodipodi:guide
        position="58.977005,48.813188"
        orientation="1,0"
-       id="guide510" />
+       id="guide510"
+       inkscape:locked="true" />
     <sodipodi:guide
        position="5.0312137,48.440506"
        orientation="1,0"
-       id="guide512" />
+       id="guide512"
+       inkscape:locked="true" />
     <sodipodi:guide
-       position="31.957524,46.390752"
-       orientation="1,0"
-       id="guide1812" />
+       position="-6.0560906,32.042476"
+       orientation="0,-1"
+       id="guide1025"
+       inkscape:locked="true" />
   </sodipodi:namedview>
   <defs
      id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker1534"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="StopL"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8)"
+         style="fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,5.65 L 0.0,-5.65"
+         id="path1422" />
+    </marker>
+    <marker
+       inkscape:stockid="DistanceStart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="DistanceStart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <g
+         id="g2300">
+        <path
+           id="path2306"
+           d="M 0,0 L 2,0"
+           style="fill:none;stroke:context-fill;stroke-width:1.15;stroke-linecap:square" />
+        <path
+           id="path2302"
+           d="M 0,0 L 13,4 L 9,0 13,-4 L 0,0 z "
+           style="fill:context-stroke;fill-rule:evenodd;stroke:none" />
+        <path
+           id="path2304"
+           d="M 0,-4 L 0,40"
+           style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:square" />
+      </g>
+    </marker>
     <marker
        style="overflow:visible;"
        id="marker1206"
@@ -268,20 +314,158 @@
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
          id="path1509" />
     </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1509-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1206-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         id="path972-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1206-3-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         id="path972-6-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart-89"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1509-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1206-33"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         id="path972-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1206-33-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         id="path972-0-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1206-33-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         id="path972-0-2" />
+    </marker>
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
-       x="4.4023438"
-       y="46.580078"
-       id="text1561"><tspan
-         sodipodi:role="line"
-         id="tspan1559"
-         x="4.4023438"
-         y="46.580078">EN</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33"
+       width="12.374583"
+       height="16.613979"
+       x="5.0312138"
+       y="9.9692574" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-7"
+       width="13.1845"
+       height="11.930514"
+       x="25.268473"
+       y="9.6263084" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-7-0"
+       width="12.941798"
+       height="17.617155"
+       x="46.256802"
+       y="9.7476587" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-4"
+       width="12.374583"
+       height="16.613979"
+       x="4.809618"
+       y="32.179123" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-7-1"
+       width="12.498602"
+       height="21.820879"
+       x="25.389826"
+       y="32.179123" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667004;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-7-0-9"
+       width="12.941798"
+       height="17.617155"
+       x="46.035206"
+       y="31.957523" />
+    <path
+       style="fill:none;stroke:#0a1e6e;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:3.96667;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#StopL);marker-end:url(#marker1534)"
+       d="m 23.199485,21.932737 h 35.77752"
+       id="path1810"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#0a1e6e;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:3.96667;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#StopL);marker-end:url(#marker1534)"
+       d="m 23.199485,21.932737 v 35.77752"
+       id="path1810-0"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

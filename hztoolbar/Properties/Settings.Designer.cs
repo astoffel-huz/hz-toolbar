@@ -46,5 +46,89 @@ namespace hztoolbar.Properties {
                 this["arrange_vertical_gutter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string change_shape_type {
+            get {
+                return ((string)(this["change_shape_type"]));
+            }
+            set {
+                this["change_shape_type"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool arrange_grid_resize_horizontal {
+            get {
+                return ((bool)(this["arrange_grid_resize_horizontal"]));
+            }
+            set {
+                this["arrange_grid_resize_horizontal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool arrange_grid_resize_vertical {
+            get {
+                return ((bool)(this["arrange_grid_resize_vertical"]));
+            }
+            set {
+                this["arrange_grid_resize_vertical"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public float textbox_margin_top {
+            get {
+                return ((float)(this["textbox_margin_top"]));
+            }
+            set {
+                this["textbox_margin_top"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public float textbox_margin_left {
+            get {
+                return ((float)(this["textbox_margin_left"]));
+            }
+            set {
+                this["textbox_margin_left"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public float textbox_margin_bottom {
+            get {
+                return ((float)(this["textbox_margin_bottom"]));
+            }
+            set {
+                this["textbox_margin_bottom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public float textbox_margin_right {
+            get {
+                return ((float)(this["textbox_margin_right"]));
+            }
+            set {
+                this["textbox_margin_right"] = value;
+            }
+        }
     }
 }

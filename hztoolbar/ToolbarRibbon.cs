@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Immutable;
 using System.Windows;
 using System.Windows.Interop;
+using hztoolbar.Properties;
 
 // TODO:  Follow these steps to enable the Ribbon (XML) item:
 
@@ -96,7 +97,11 @@ namespace hztoolbar
 
         public void OnAction(Office.IRibbonControl control)
         {
-            WithActionDo<object?>(control, (action, param) => { action.Run(param); return null; }, null); ;
+            var invalidate = WithActionDo<bool>(control, (action, param) => action.Run(param), false); ;
+            if (invalidate && this.ribbon != null)
+            {
+                this.ribbon.Invalidate();
+            }
         }
 
         public bool IsEnabled(Office.IRibbonControl control)
@@ -106,29 +111,24 @@ namespace hztoolbar
 
         public string GetLabel(Office.IRibbonControl control)
         {
-            return Utils.GetResourceString($"{control.Id}_label");
+            return WithActionDo<string>(control, (action, param) => action.GetLabel(control.Id, param), Utils.GetResourceString($"{control.Id}_label"));
         }
 
         public string GetSupertip(Office.IRibbonControl control)
         {
-            return Utils.GetResourceString($"{control.Id}_supertip");
+            return WithActionDo<string>(control, (action, param) => action.GetSupertip(control.Id, param), "");
         }
 
 
-        public Bitmap? GetImage(Office.IRibbonControl control)
+        public object? GetImage(Office.IRibbonControl control)
         {
-            var image = Utils.LoadImageResource($"hztoolbar.icons.{control.Id}.png");
-            if (image == null)
+            var bitmap = WithActionDo<Bitmap?>(control, (action, param) => action.GetImage(control.Id, param), null);
+            if (bitmap != null)
             {
-                image = Utils.LoadImageResource("hztoolbar.icons.question.png");
+                return bitmap;
             }
-            if (image != null)
-            {
-                var result = new Bitmap(image);
-                result = WithActionDo(control, (action, param) => action.UpdateIcon(result, param), result);
-                return result;
-            }
-            return null;
+            var msoImage = WithActionDo<string?>(control, (action, param) => action.GetMsoImage(control.Id, param), null);
+            return msoImage;
         }
 
         public void OnArrangeSettingsOpen(Office.IRibbonControl control)
@@ -145,9 +145,11 @@ namespace hztoolbar
             dialog.Content = settings;
             var interop = new WindowInteropHelper(dialog);
             interop.Owner = Process.GetCurrentProcess().MainWindowHandle;
-            if (dialog.ShowDialog() == true) {
-                Properties.Settings.Default.Save();
-            }
+			if (dialog.ShowDialog() == true) {
+				Properties.Settings.Default.Save();
+			} else { 
+				Properties.Settings.Default.Reload();
+			}                            
         }
 
 

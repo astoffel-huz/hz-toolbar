@@ -8,8 +8,8 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="EN.svg"
-   inkscape:export-filename="C:\Users\andreas.stoffel\source\repos\hztoolbar\hztoolbar\icons\change_language_en.png"
+   sodipodi:docname="copy.svg"
+   inkscape:export-filename="C:\Users\andreas.stoffel\source\repos\hztoolbar\hztoolbar\icons\copy.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -30,10 +30,10 @@
      scale-x="1"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="3.7946874"
-     inkscape:cx="37.5525"
-     inkscape:cy="14.362184"
-     inkscape:window-width="2560"
+     inkscape:zoom="5.3664983"
+     inkscape:cx="21.708756"
+     inkscape:cy="80.59259"
+     inkscape:window-width="3440"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -71,7 +71,7 @@
        orientation="1,0"
        id="guide512" />
     <sodipodi:guide
-       position="31.957524,46.390752"
+       position="31.864354,42.198074"
        orientation="1,0"
        id="guide1812" />
   </sodipodi:namedview>
@@ -273,15 +273,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
-       x="4.4023438"
-       y="46.580078"
-       id="text1561"><tspan
-         sodipodi:role="line"
-         id="tspan1559"
-         x="4.4023438"
-         y="46.580078">EN</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2.99999;stroke-miterlimit:3.96667;stroke-dasharray:none"
+       id="rect31"
+       width="32.889233"
+       height="31.075598"
+       x="5.0312147"
+       y="9.9692574" />
+    <rect
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2.99998999;stroke-miterlimit:3.96667004;stroke-dasharray:11.99995995,2.99998999;stroke-dashoffset:0"
+       id="rect31-7"
+       width="32.889233"
+       height="31.075598"
+       x="26.08777"
+       y="22.924404" />
   </g>
 </svg>

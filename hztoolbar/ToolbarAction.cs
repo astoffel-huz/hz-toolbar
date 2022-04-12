@@ -19,7 +19,7 @@ namespace hztoolbar
 
         protected virtual IEnumerable<PowerPoint.Shape> GetSelectedShapes()
         {
-            var application = Globals.ThisAddIn.Application;            
+            var application = Globals.ThisAddIn.Application;
             var selection = application.ActiveWindow.Selection;
 
             if (selection.Type != PowerPoint.PpSelectionType.ppSelectionShapes)
@@ -33,9 +33,29 @@ namespace hztoolbar
             );
         }
 
-        public virtual Bitmap UpdateIcon(Bitmap image, string arg = "")
+        public virtual Bitmap? GetImage(string controlId, string arg = "")
         {
-            return image;
+            var result = Utils.LoadImageResource($"hztoolbar.icons.{controlId}.png");
+            if (result == null)
+            {
+                result = Utils.LoadImageResource("hztoolbar.icons.question.png");
+            }
+            return result;
+        }
+
+        public virtual string? GetMsoImage(string controlId, string arg = "")
+        {
+            return null;
+        }
+
+        public virtual string GetLabel(string controlId, string arg = "")
+        {
+            return Utils.GetResourceString($"{controlId}_label");
+        }
+
+        public virtual string GetSupertip(string controlId, string arg = "")
+        {
+            return Utils.GetResourceString($"{controlId}_supertip");
         }
 
         public virtual bool IsEnabled(string arg = "")
@@ -43,6 +63,6 @@ namespace hztoolbar
             return true;
         }
 
-        public abstract void Run(string arg = "");
+        public abstract bool Run(string arg = "");
     }
 }

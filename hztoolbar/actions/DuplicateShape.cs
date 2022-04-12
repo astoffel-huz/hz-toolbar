@@ -31,7 +31,7 @@ namespace hztoolbar.actions
             return GetSelectedShapes().Take(2).Count() == 1;
         }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shape = GetSelectedShapes().FirstOrDefault();
             var slide = Utils.GetActiveSlide();
@@ -60,6 +60,7 @@ namespace hztoolbar.actions
                     copy.TextFrame.TextRange.Paste();
                 }
             }
+            return false;
         }
     }
 

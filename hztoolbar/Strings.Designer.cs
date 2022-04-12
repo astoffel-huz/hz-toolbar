@@ -286,11 +286,56 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To Grid (Interactive).
+        /// </summary>
+        public static string arrange_grid_control_label {
+            get {
+                return ResourceManager.GetString("arrange_grid_control_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Grid.
         /// </summary>
         public static string arrange_grid_label {
             get {
                 return ResourceManager.GetString("arrange_grid_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Grid (large).
+        /// </summary>
+        public static string arrange_grid_large_label {
+            get {
+                return ResourceManager.GetString("arrange_grid_large_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Grid (medium).
+        /// </summary>
+        public static string arrange_grid_medium_label {
+            get {
+                return ResourceManager.GetString("arrange_grid_medium_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Grid (none).
+        /// </summary>
+        public static string arrange_grid_none_label {
+            get {
+                return ResourceManager.GetString("arrange_grid_none_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Grid (small).
+        /// </summary>
+        public static string arrange_grid_small_label {
+            get {
+                return ResourceManager.GetString("arrange_grid_small_label", resourceCulture);
             }
         }
         
@@ -322,6 +367,24 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_close_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_close_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gutter.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_gutter_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_gutter_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal gutter.
         /// </summary>
         public static string arrange_shape_settings_dialog_horizontal_gutter_label {
@@ -331,11 +394,38 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Horizontal.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_horizontal_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_horizontal_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string arrange_shape_settings_dialog_ok_label {
             get {
                 return ResourceManager.GetString("arrange_shape_settings_dialog_ok_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resize.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_resize_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_resize_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close &amp; Save.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_save_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_save_label", resourceCulture);
             }
         }
         
@@ -354,6 +444,15 @@ namespace hztoolbar {
         public static string arrange_shape_settings_dialog_vertical_gutter_label {
             get {
                 return ResourceManager.GetString("arrange_shape_settings_dialog_vertical_gutter_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical.
+        /// </summary>
+        public static string arrange_shape_settings_dialog_vertical_label {
+            get {
+                return ResourceManager.GetString("arrange_shape_settings_dialog_vertical_label", resourceCulture);
             }
         }
         
@@ -385,33 +484,6 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rectangle.
-        /// </summary>
-        public static string change_shape_rectangle_separator {
-            get {
-                return ResourceManager.GetString("change_shape_rectangle_separator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change shape.
-        /// </summary>
-        public static string change_shape_type {
-            get {
-                return ResourceManager.GetString("change_shape_type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to change_to_rectangle.
-        /// </summary>
-        public static string change_to_rectangle_label {
-            get {
-                return ResourceManager.GetString("change_to_rectangle_label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Clear text.
         /// </summary>
         public static string clear_text_label {
@@ -426,6 +498,15 @@ namespace hztoolbar {
         public static string color_actions_label {
             get {
                 return ResourceManager.GetString("color_actions_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy type.
+        /// </summary>
+        public static string copy_shape_type_label {
+            get {
+                return ResourceManager.GetString("copy_shape_type_label", resourceCulture);
             }
         }
         
@@ -480,6 +561,15 @@ namespace hztoolbar {
         public static string horizontal_resize_guide_label {
             get {
                 return ResourceManager.GetString("horizontal_resize_guide_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Shape.
+        /// </summary>
+        public static string repeat_last_shape_change_label {
+            get {
+                return ResourceManager.GetString("repeat_last_shape_change_label", resourceCulture);
             }
         }
         

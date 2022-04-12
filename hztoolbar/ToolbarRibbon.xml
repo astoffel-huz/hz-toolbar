@@ -4,45 +4,25 @@
 		<tabs>
 			<tab id="HZToolbar" label="H&amp;Z Toolbar">
 
-
 				<group id="text_actions" getLabel="GetLabel">
 					<button id="swap_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
 					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
 
-					<button id="change_language_en" tag="change_language:en" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+						<!--<button id="text_margin_none" tag="text_margin:none" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+						<button id="text_margin_small" tag="text_margin:small" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+						<button id="text_margin_normal" tag="text_margin:normal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+						<button id="text_margin_large" tag="text_margin:large" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+						<button id="default_text_margins" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>-->
+
+					<button id="change_language_en" tag="change_language:en" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="normal"/>
+					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="normal"/>
 				</group>
 
 				<group id="shape_actions" getLabel="GetLabel" >
-					<splitButton id="change_shape_actions">
-						<button id="change_shape_repeat" imageMso="ShapesMoreShapes"/>
+					
+					<control idMso="ShapeChangeShapeGallery"/>
 
-						<menu id="change_shape_type" getLabel="GetLabel" imageMso="ShapesMoreShapes" >
-							<button id="change_to_rectangle" tag="change_shape_type:Rectangle" imageMso="ShapeRectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false"  />
-							<button id="change_to_roundedrectangle" tag="change_shape_type:RoundedRectangle" imageMso="ShapeRoundedRectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-
-							<button id="change_to_isoscelestriangle" tag="change_shape_type:IsoscelesTriangle" imageMso="ShapeIsoscelesTriangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_oval" tag="change_shape_type:Oval" imageMso="ShapeOval" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_smilyface" tag="change_shape_type:SmileyFace" imageMso="ShapeSmileyFace" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_donut" tag="change_shape_type:Donut" imageMso="ShapeDonut" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_heart" tag="change_shape_type:Heart" imageMso="ShapeHeart" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_rightarrow" tag="change_shape_type:RightArrow" imageMso="ShapeRightArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_leftarrow" tag="change_shape_type:LeftArrow" imageMso="ShapeLeftArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_uparrow" tag="change_shape_type:UpArrow" imageMso="ShapeUpArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_downarrow" tag="change_shape_type:DownArrow" imageMso="ShapeDownArrow" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-
-							<button id="change_to_roundedrectangularcallout" tag="change_shape_type:RoundedRectangularCallout" imageMso="ShapeRoundedRectangularCallout" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_start" tag="change_shape_type:5pointStar" imageMso="ShapeStar" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_seal8" tag="change_shape_type:8pointStar" imageMso="ShapeSeal8" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_seal16" tag="change_shape_type:16pointStar" imageMso="ShapeSeal16" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-							<button id="change_to_seal24" tag="change_shape_type:24pointStar" imageMso="ShapeSeal24" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getSupertip="GetSupertip" showLabel="false" />
-						</menu>
-					</splitButton>
-
-
-
-
-
+					<button id="copy_shape_type" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 
 					<separator id="shape_actions_size_separator"/>
 
@@ -62,7 +42,21 @@
 					<button id="arrange_horizontal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
 					<button id="arrange_vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
 					<button id="arrange_magnet" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
-					<button id="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
+					<!--<button id="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>-->
+					<!--<buttonGroup id="arrange_grid_group" >
+						<button id="arrange_grid" tag="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" showLabel="false" />
+						<button id="arrange_grid2" tag="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+					</buttonGroup>-->
+					<splitButton id="arrange_grid_splitbutton" size="large" >
+						<button id="arrange_grid" tag="arrange_grid" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+						<menu id="arrange_grid_menu">
+							<button id="arrange_grid_none" tag="arrange_grid:none" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+							<button id="arrange_grid_small" tag="arrange_grid:small" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+							<button id="arrange_grid_medium" tag="arrange_grid:medium" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+							<button id="arrange_grid_large" tag="arrange_grid:large" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+							<button id="arrange_grid_control" tag="arrange_grid:interactive" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip"/>
+						</menu>
+					</splitButton>
 					<dialogBoxLauncher>
 						<button id="arrange_settings" onAction="OnArrangeSettingsOpen"/>
 					</dialogBoxLauncher>
@@ -80,7 +74,7 @@
 					<button id="vertical_resize_guide" tag="resize_guide:vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 				</group>
 
-				<group id="color_actions" getLabel="GetLabel">
+				<group id="color_actions" getLabel="GetLabel" >
 					<button id="apply_background_dark1_theme_color" tag="apply_background_theme_color:dark1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_background_light1_theme_color" tag="apply_background_theme_color:light1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_background_dark2_theme_color" tag="apply_background_theme_color:dark2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>

@@ -27,13 +27,13 @@ namespace hztoolbar.actions
                 && shape.AutoShapeType == Office.MsoAutoShapeType.msoShapeRectangle;
         }
 
-        public override void Run(string arg = "")
+        public override bool Run(string arg = "")
         {
             var shapes = GetSelectedShapes().ToList();
 
             if (shapes.Count != 1)
             {
-                return;
+                return false;
             }
 
             var shape = shapes[0];
@@ -60,18 +60,18 @@ namespace hztoolbar.actions
             {
                 if (settings.NumRows == 1 && settings.NumColumns == 1)
                 {
-                    return;
+                    return false;
                 }
                 var rowHeight = (shape.Height - (settings.NumRows - 1) * settings.RowGutter) / settings.NumRows;
                 var columnWidth = (shape.Width - (settings.NumColumns - 1) * settings.ColumnGutter) / settings.NumColumns;
                 if (rowHeight <= 0||columnWidth <= 0)
                 {
-                    return;
+                    return false;
                 }
                 var slide = Utils.GetActiveSlide();
                 if (slide == null)
                 {
-                    return;
+                    return false;
                 }
                 var top = shape.Top;
                 for (var row = 0; row < settings.NumRows; ++row)
@@ -88,6 +88,7 @@ namespace hztoolbar.actions
                 }
                 shape.Delete();
             }
+            return false;
         }
     }
 }
