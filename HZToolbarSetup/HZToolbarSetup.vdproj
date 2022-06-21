@@ -70,7 +70,7 @@
         "Entry"
         {
         "MsmKey" = "8:_66EC3E9F02C6DDE2448F598927AF88BE"
-        "OwnerKey" = "8:_E7E71FF1218B3D7FA466CE329B7242EA"
+        "OwnerKey" = "8:_8AF941C0D668ED9A483626514B4BC887"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,6 +93,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8AF941C0D668ED9A483626514B4BC887"
+        "OwnerKey" = "8:_A3DF96F3C6A2498D9D96C157798590A7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A3DF96F3C6A2498D9D96C157798590A7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,7 +106,7 @@
         "Entry"
         {
         "MsmKey" = "8:_AB9A5ADB321DDBADDB69EB400D453DC9"
-        "OwnerKey" = "8:_E7E71FF1218B3D7FA466CE329B7242EA"
+        "OwnerKey" = "8:_8AF941C0D668ED9A483626514B4BC887"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -129,20 +135,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E7E71FF1218B3D7FA466CE329B7242EA"
-        "OwnerKey" = "8:_E7A326B4D20D4F92D667F55BC1F96CCC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E7E71FF1218B3D7FA466CE329B7242EA"
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A3DF96F3C6A2498D9D96C157798590A7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A3DF96F3C6A2498D9D96C157798590A7"
+        "OwnerKey" = "8:_8AF941C0D668ED9A483626514B4BC887"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AB9A5ADB321DDBADDB69EB400D453DC9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -155,18 +161,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_78617212E3E1C084255CFEEA91B164DD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E7E71FF1218B3D7FA466CE329B7242EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AB9A5ADB321DDBADDB69EB400D453DC9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -585,6 +579,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AF941C0D668ED9A483626514B4BC887"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8AF941C0D668ED9A483626514B4BC887"
+                    {
+                    "Name" = "8:System.Memory.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Memory.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_087B96D2C9094B72B75682B76BB27F2A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AB9A5ADB321DDBADDB69EB400D453DC9"
             {
             "AssemblyRegister" = "3:1"
@@ -698,32 +723,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E7E71FF1218B3D7FA466CE329B7242EA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:System.Memory.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_087B96D2C9094B72B75682B76BB27F2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -732,7 +731,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_087B96D2C9094B72B75682B76BB27F2A"
             {
-            "DefaultLocation" = "8:[ProgramFiles64Folder]HZ Unternehmensberatung AG\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder]HZ Unternehmensberatung AG\\HZ Toolbar"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -802,16 +801,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:HZToolbarSetup"
-        "ProductCode" = "8:{4376CDDD-FFA4-4AC6-BA74-4FEF70811626}"
-        "PackageCode" = "8:{61F48BE4-186D-4CC8-A533-52A5D12C8488}"
+        "ProductName" = "8:H&Z Toolbar"
+        "ProductCode" = "8:{8531C9E6-4F73-4399-9ACA-FFDB978858DE}"
+        "PackageCode" = "8:{136AFFBE-F245-4504-A907-FEBA9669D371}"
         "UpgradeCode" = "8:{E18E2347-597C-4454-BA9F-62239D5FD0C9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:H&Z Unternehmensberatung AG"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -827,7 +826,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:\"C:\\Program Files (x86)\\Windows Kits\\10\\App Certification Kit\\signtool.exe\"  sign /a \"$(BuiltOuputPath)\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
