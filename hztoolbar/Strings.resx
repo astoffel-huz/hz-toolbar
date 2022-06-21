@@ -321,6 +321,24 @@
   <data name="text_actions_label" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="text_margin_custom_label" xml:space="preserve">
+    <value>Custom margins</value>
+  </data>
+  <data name="text_margin_default_label" xml:space="preserve">
+    <value>Reset margins</value>
+  </data>
+  <data name="text_margin_large_label" xml:space="preserve">
+    <value>Large margins</value>
+  </data>
+  <data name="text_margin_none_label" xml:space="preserve">
+    <value>No margins</value>
+  </data>
+  <data name="text_margin_normal_label" xml:space="preserve">
+    <value>Normal margins</value>
+  </data>
+  <data name="text_margin_small_label" xml:space="preserve">
+    <value>Small margins</value>
+  </data>
   <data name="vertical_resize_guide_label" xml:space="preserve">
     <value>Vertical fit to guides</value>
   </data>

@@ -18,16 +18,16 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="textbox_margin_top" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3.6</Value>
     </Setting>
     <Setting Name="textbox_margin_left" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">7.2</Value>
     </Setting>
     <Setting Name="textbox_margin_bottom" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3.6</Value>
     </Setting>
     <Setting Name="textbox_margin_right" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">7.2</Value>
     </Setting>
   </Settings>
 </SettingsFile>

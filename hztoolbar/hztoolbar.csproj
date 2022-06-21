@@ -41,10 +41,10 @@
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <ProductName>HZ Toolbar</ProductName>
-    <PublisherName />
+    <ProductName>H&amp;Z Toolbar</ProductName>
+    <PublisherName>H&amp;Z Unternehmensberatung AG</PublisherName>
     <SupportUrl />
-    <FriendlyName>HZ Toolbar</FriendlyName>
+    <FriendlyName>H&amp;Z Toolbar</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
@@ -142,8 +142,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -254,6 +254,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="huz_codesigning_2022.pfx" />
     <None Include="hztoolbar_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -397,6 +398,23 @@
   <ItemGroup>
     <EmbeddedResource Include="icons\arrange_grid_large.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\text_margin_large.png" />
+    <EmbeddedResource Include="icons\text_margin_none.png" />
+    <EmbeddedResource Include="icons\text_margin_normal.png" />
+    <EmbeddedResource Include="icons\text_margin_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\text_margin_custom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\text_margin_default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\arrange_grid_medium.png" />
+    <EmbeddedResource Include="icons\arrange_grid_none.png" />
+    <EmbeddedResource Include="icons\arrange_grid_small.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -405,13 +423,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>hztoolbar_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>huz_codesigning_2022.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>41BE9FFDF81D232BC6F47B079861881EDF2BF45B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>DD85999A4C3DD508544E166C91CB276906333CAF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

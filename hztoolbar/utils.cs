@@ -9,8 +9,6 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Interop;
 using Office = Microsoft.Office.Core;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
@@ -18,6 +16,9 @@ using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 
 namespace hztoolbar {
 
+	/// <summary>
+	/// Class defining utility functions and tools.
+	/// </summary>
 	public static class Utils {
 
 		#region BulletFormat2
@@ -162,6 +163,9 @@ namespace hztoolbar {
 
 		#region ParagraphFormat2
 
+		/// <summary>
+		/// Snapshot of a paragraph format.
+		/// </summary>
 		public class ParagraphFormatSnapshot {
 			public readonly Office.MsoParagraphAlignment Alignment;
 			public readonly Office.MsoBaselineAlignment BaselineAlignment;
@@ -186,6 +190,11 @@ namespace hztoolbar {
 			}
 		}
 
+		/// <summary>
+		/// Create snapshot of a pargaraph format.
+		/// </summary>
+		/// <param name="format">the format to capture</param>
+		/// <returns>a snapshot of the paragraph format</returns>
 		public static ParagraphFormatSnapshot Capture(Office.ParagraphFormat2 format) {
 			return new ParagraphFormatSnapshot(
 				format.Alignment,
@@ -199,6 +208,11 @@ namespace hztoolbar {
 				);
 		}
 
+		/// <summary>
+		/// Copies a paragraph format snapshot onto a paragraph format.
+		/// </summary>
+		/// <param name="to">the paragraph format to modify</param>
+		/// <param name="snapshot">the format snapshot to apply</param>
 		public static void Apply(Office.ParagraphFormat2 to, ParagraphFormatSnapshot snapshot) {
 			to.Alignment = snapshot.Alignment;
 			to.BaselineAlignment = snapshot.BaselineAlignment;
@@ -210,6 +224,11 @@ namespace hztoolbar {
 			Apply(to.TabStops, snapshot.TabStops);
 		}
 
+		/// <summary>
+		/// Copies a paragraph format.
+		/// </summary>
+		/// <param name="to">the target paragraph format</param>
+		/// <param name="from">the source paragraph format to copy</param>
 		public static void Copy(Office.ParagraphFormat2 to, Office.ParagraphFormat2 from) {
 			to.Alignment = from.Alignment;
 			to.BaselineAlignment = from.BaselineAlignment;
@@ -407,14 +426,17 @@ namespace hztoolbar {
 		}
 		#endregion
 
+		public static PowerPoint.DocumentWindow? GetActiveWindow() {
+			var application = Globals.ThisAddIn.Application;
+			if (application.Windows.Count == 0) { return null; }
+			return application.ActiveWindow;
+		}
 
 		public static PowerPoint.Slide? GetActiveSlide() {
-			var application = Globals.ThisAddIn.Application;
-			try {
-				return (PowerPoint.Slide)application.ActiveWindow.View.Slide;
-			} catch {
-				return null;
-			}
+			var window = GetActiveWindow();
+			if (window == null) { return null; }
+			if (window.Presentation.Slides.Count == 0) { return null; }
+			return (PowerPoint.Slide)window.View.Slide;
 		}
 
 		public static string GetResourceString(string key, string defaultValue = "") {
@@ -478,7 +500,12 @@ namespace hztoolbar {
 			return result;
 		}
 
-
+		/// <summary>
+		/// Replaces all color in a image with the specified color and only preseving the alpha value.
+		/// </summary>
+		/// <param name="image">the image to modify</param>
+		/// <param name="color">the new color value</param>
+		/// <returns><c>image</c> where all rgb values are replaced with the rbg values from <c>color</c></returns>
 		public static Bitmap ReplaceBitmapColor(Bitmap image, Color color) {
 			var node = COLORED_BITMAP_CACHE.First;
 			while (node != null && !(node.Value.Key.Item1 == image && node.Value.Key.Item2 == color.ToArgb())) {
@@ -504,6 +531,15 @@ namespace hztoolbar {
 			return result;
 		}
 
+		/// <summary>
+		/// Returns the last item in a list that is below the query value.
+		/// </summary>
+		/// <typeparam name="T">list item type</typeparam>
+		/// <param name="query">the query value</param>
+		/// <param name="items">the list of items</param>
+		/// <param name="mapper">maps a list item to a value</param>
+		/// <param name="threshold">the epsilon threshold for the query value</param>
+		/// <returns>the item with the highest mapping value smaller or equal to <c>query + threshold</c></returns>
 		public static T? FloorItem<T>(double query, IEnumerable<T> items, Func<T, double> mapper, double threshold = 0.1)
 			where T : class {
 			var sorted = (
@@ -516,6 +552,15 @@ namespace hztoolbar {
 			return sorted.FirstOrDefault();
 		}
 
+		/// <summary>
+		/// Returns the first item in a list that is above the query value.
+		/// </summary>
+		/// <typeparam name="T">list item type</typeparam>
+		/// <param name="query">the query value</param>
+		/// <param name="items">the list of items</param>
+		/// <param name="mapper">maps a list item to a value</param>
+		/// <param name="threshold">the epsilon threshold for the query value</param>
+		/// <returns>the item with the lowest mapping value bigger or equal to <c>query - threshold</c></returns>
 		public static T? CeilingItem<T>(double query, IEnumerable<T> items, Func<T, double> mapper, double threshold = 0.1)
 		where T : class {
 			var sorted = (
@@ -527,6 +572,10 @@ namespace hztoolbar {
 			return sorted.FirstOrDefault();
 		}
 
+		/// <summary>
+		/// Creates a modal window.
+		/// </summary>
+		/// <returns>the modal window</returns>
 		public static Window CreateModalWindow() {
 			var window = new Window() {
 				SizeToContent = SizeToContent.WidthAndHeight,
@@ -535,9 +584,10 @@ namespace hztoolbar {
 				WindowStartupLocation = WindowStartupLocation.CenterOwner,
 			};
 			var interop = new WindowInteropHelper(window);
-			interop.Owner = Process.GetCurrentProcess().MainWindowHandle;			
+			interop.Owner = Process.GetCurrentProcess().MainWindowHandle;
 			return window;
 		}
+
 	}
 
 }

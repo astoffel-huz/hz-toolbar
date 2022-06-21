@@ -1,16 +1,11 @@
 ﻿#nullable enable
 
+using Microsoft.Office.Interop.PowerPoint;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Interop.PowerPoint;
 using System.Collections.Immutable;
-using hztoolbar.Properties;
+using System.Linq;
+using Office = Microsoft.Office.Core;
 
 namespace hztoolbar.actions {
 
@@ -87,8 +82,19 @@ namespace hztoolbar.actions {
 		public override bool Run(string arg = "") {
 			if (LANGUAGES.TryGetValue(arg, out var language)) {
 				var shapes = GetSelectedShapes().ToList();
-				foreach (var shape in shapes) {
-					shape.TextFrame2.TextRange.LanguageID = language;
+				if (shapes.Count > 0) {
+					foreach (var shape in shapes) {
+						shape.TextFrame2.TextRange.LanguageID = language;
+					}
+				} else {
+					var slide = Utils.GetActiveSlide();
+					if (slide != null) {
+						foreach (Shape shape in slide.Shapes) {
+							if (shape.HasTextFrame == Office.MsoTriState.msoTrue || shape.HasTextFrame == Office.MsoTriState.msoCTrue) {
+								shape.TextFrame2.TextRange.LanguageID = language;
+							}
+						}
+					}
 				}
 			}
 			return false;
@@ -111,7 +117,7 @@ namespace hztoolbar.actions {
 
 	public class DefaultTextMargin : AbstractChangeTextMargin {
 
-		public DefaultTextMargin() : base("default_text_margin") { }
+		public DefaultTextMargin() : base("text_margin_default") { }
 
 		public override bool Run(string arg = "") {
 			ChangeMargins(
@@ -126,11 +132,12 @@ namespace hztoolbar.actions {
 	}
 
 	public class ChangeTextMargin : AbstractChangeTextMargin {
-		private readonly ImmutableDictionary<string, float> MARGINS = new Dictionary<string, float>() {
-			["none"] = 0f,
-			["small"] = 2f,
-			["normal"] = 5f,
-			["large"] = 10f,
+		// H&Z Template 20223: x= 0.1"=7.2, y=0.05" = 3.6
+		private readonly ImmutableDictionary<string, (float top, float left, float bottom, float right)> MARGINS = new Dictionary<string, (float top, float left, float bottom, float right)>() {
+			["none"] = (0f, 0f, 0f, 0f),
+			["small"] = (1.8f, 3.6f, 1.8f, 3.6f),
+			["normal"] = (3.6f, 7.2f, 3.6f, 7.2f),
+			["large"] = (7.2f, 14.4f, 7.2f, 14.4f),
 
 		}.ToImmutableDictionary();
 
@@ -142,7 +149,7 @@ namespace hztoolbar.actions {
 
 		public override bool Run(string arg = "") {
 			if (MARGINS.TryGetValue(arg, out var margin)) {
-				ChangeMargins(GetSelectedShapes(), margin, margin, margin, margin);
+				ChangeMargins(GetSelectedShapes(), margin.top, margin.left, margin.bottom, margin.right);
 			}
 			return false;
 		}
@@ -150,7 +157,7 @@ namespace hztoolbar.actions {
 
 	public class CustomTextMargin : AbstractChangeTextMargin {
 
-		public CustomTextMargin() : base("custom_text_margin") { }
+		public CustomTextMargin() : base("text_margin_custom") { }
 
 		public override bool Run(string arg = "") {
 			var shapes = GetSelectedShapes().ToList();

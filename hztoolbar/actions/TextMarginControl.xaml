@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hztoolbar.actions"
-            xmlns:p="clr-namespace:hztoolbar"
+             x:Name="_this"
+             xmlns:p="clr-namespace:hztoolbar"
              xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="hztoolbar.actions.TextMarginControl"
              mc:Ignorable="d" >
     <UserControl.Resources>
@@ -27,10 +28,10 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <hc:NumericUpDown x:Name="leftMarginInput" Value="{Binding ElementName=_this, Path=LeftMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1"/>
-        <hc:NumericUpDown x:Name="topMarginInput"  Value="{Binding ElementName=_this, Path=TopMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1"/>
-        <hc:NumericUpDown x:Name="rightMarginInput"  Value="{Binding ElementName=_this, Path=RightMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2"/>
-        <hc:NumericUpDown x:Name="bottomMarginInput"  Value="{Binding ElementName=_this, Path=BottomMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+        <hc:NumericUpDown x:Name="leftMarginInput" Value="{Binding ElementName=_this, Path=LeftMargin, Mode=TwoWay}" ValueFormat="N2" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1"/>
+        <hc:NumericUpDown x:Name="topMarginInput"  Value="{Binding ElementName=_this, Path=TopMargin, Mode=TwoWay}" ValueFormat="N2" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1"/>
+        <hc:NumericUpDown x:Name="rightMarginInput"  Value="{Binding ElementName=_this, Path=RightMargin, Mode=TwoWay}" ValueFormat="N2" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2"/>
+        <hc:NumericUpDown x:Name="bottomMarginInput"  Value="{Binding ElementName=_this, Path=BottomMargin, Mode=TwoWay}" ValueFormat="N2" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
         <Grid Grid.Row="3" Margin="2,2,2,2" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -40,8 +41,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="save" Content="{x:Static p:Strings.arrange_shape_settings_dialog_save_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1" Style="{DynamicResource ButtonPrimary}"/>
-            <Button x:Name="close" Content="{x:Static p:Strings.arrange_shape_settings_dialog_close_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="2" IsDefault="True" Style="{DynamicResource ButtonWarning}"/>
+            <Button x:Name="save" Content="{x:Static p:Strings.arrange_shape_settings_dialog_save_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1" Click="OnSaveClickHandler" Style="{DynamicResource ButtonPrimary}"/>
+            <Button x:Name="close" Content="{x:Static p:Strings.arrange_shape_settings_dialog_close_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="2" IsDefault="True" Click="OnCloseClickHandler" Style="{DynamicResource ButtonWarning}"/>
         </Grid>
     </Grid>
 </UserControl>

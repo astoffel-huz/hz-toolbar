@@ -1,68 +1,64 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
-using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using System.Linq;
 using System.Drawing;
+using System.Linq;
+using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 
-namespace hztoolbar
-{
-    public abstract class ToolbarAction
-    {
+namespace hztoolbar {
+	/// <summary>
+	/// Base class for H&amp;Z toolbar actions.
+	/// </summary>
+	public abstract class ToolbarAction {
 
-        public readonly string Id;
+		public readonly string Id;
 
-        protected ToolbarAction(string id)
-        {
-            this.Id = id;
-        }
+		protected ToolbarAction(string id) {
+			this.Id = id;
+		}
 
-        protected virtual IEnumerable<PowerPoint.Shape> GetSelectedShapes()
-        {
-            var application = Globals.ThisAddIn.Application;
-            var selection = application.ActiveWindow.Selection;
+		protected virtual IEnumerable<PowerPoint.Shape> GetSelectedShapes() {
+			var activeWindow = Utils.GetActiveWindow();
+			if (activeWindow == null) {
+				return Enumerable.Empty<PowerPoint.Shape>();
+			}
 
-            if (selection.Type != PowerPoint.PpSelectionType.ppSelectionShapes)
-            {
-                return Enumerable.Empty<PowerPoint.Shape>();
-            }
+			var selection = activeWindow.Selection;
 
-            return (
-                from PowerPoint.Shape shape in selection.ShapeRange
-                select shape
-            );
-        }
+			if (selection.Type != PowerPoint.PpSelectionType.ppSelectionShapes) {
+				return Enumerable.Empty<PowerPoint.Shape>();
+			}
 
-        public virtual Bitmap? GetImage(string controlId, string arg = "")
-        {
-            var result = Utils.LoadImageResource($"hztoolbar.icons.{controlId}.png");
-            if (result == null)
-            {
-                result = Utils.LoadImageResource("hztoolbar.icons.question.png");
-            }
-            return result;
-        }
+			return (
+				from PowerPoint.Shape shape in selection.ShapeRange
+				select shape
+			);
+		}
 
-        public virtual string? GetMsoImage(string controlId, string arg = "")
-        {
-            return null;
-        }
+		public virtual Bitmap? GetImage(string controlId, string arg = "") {
+			var result = Utils.LoadImageResource($"hztoolbar.icons.{controlId}.png");
+			if (result == null) {
+				result = Utils.LoadImageResource("hztoolbar.icons.question.png");
+			}
+			return result;
+		}
 
-        public virtual string GetLabel(string controlId, string arg = "")
-        {
-            return Utils.GetResourceString($"{controlId}_label");
-        }
+		public virtual string? GetMsoImage(string controlId, string arg = "") {
+			return null;
+		}
 
-        public virtual string GetSupertip(string controlId, string arg = "")
-        {
-            return Utils.GetResourceString($"{controlId}_supertip");
-        }
+		public virtual string GetLabel(string controlId, string arg = "") {
+			return Utils.GetResourceString($"{controlId}_label");
+		}
 
-        public virtual bool IsEnabled(string arg = "")
-        {
-            return true;
-        }
+		public virtual string GetSupertip(string controlId, string arg = "") {
+			return Utils.GetResourceString($"{controlId}_supertip");
+		}
 
-        public abstract bool Run(string arg = "");
-    }
+		public virtual bool IsEnabled(string arg = "") {
+			return true;
+		}
+
+		public abstract bool Run(string arg = "");
+	}
 }

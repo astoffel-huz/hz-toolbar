@@ -19,11 +19,11 @@ namespace hztoolbar.actions {
 
 	public abstract class AbstractControllableArrangeShapeAction : AbstractArrangeShapeAction {
 
-		private static ImmutableDictionary<string, int> GUTTERS = new Dictionary<string, int> {
-			["none"] = 0,
-			["small"] = 4,
-			["medium"] = 10,
-			["large"] = 20
+		private static ImmutableDictionary<string, float> GUTTERS = new Dictionary<string, float> {
+			["none"] = 0f,
+			["small"] = 4f,
+			["medium"] = 10f,
+			["large"] = 20f
 		}.ToImmutableDictionary();
 
 		public class ShapeSnapshot {
@@ -47,7 +47,7 @@ namespace hztoolbar.actions {
 		protected abstract IEnumerable<PowerPoint.Shape> DoGetShapes();
 
 		protected abstract void DoRun(ImmutableList<PowerPoint.Shape> shapes,
-			int horizontal_gutter, int vertical_gutter, bool horizontal_resize, bool vertical_resize);
+			float horizontal_gutter, float vertical_gutter, bool horizontal_resize, bool vertical_resize);
 
 		public override bool Run(string arg = "") {
 			var shapes = DoGetShapes().ToImmutableList();
@@ -82,7 +82,7 @@ namespace hztoolbar.actions {
 				} finally {
 					control.ValueChanged -= changeHandler;
 				}
-			} else if (GUTTERS.TryGetValue(arg, out int gutter)) {
+			} else if (GUTTERS.TryGetValue(arg, out float gutter)) {
 				DoRun(shapes, gutter, gutter, false, false);
 			}
 			return false;
@@ -139,19 +139,35 @@ namespace hztoolbar.actions {
 
 	public class ArrangeGridAction : AbstractControllableArrangeShapeAction {
 
+		private class WithoutLockedAspectRatio : IDisposable {
+
+			private readonly PowerPoint.Shape shape;
+			private readonly Microsoft.Office.Core.MsoTriState capture;
+
+			public WithoutLockedAspectRatio(PowerPoint.Shape shape) {
+				this.shape = shape;
+				this.capture = this.shape.LockAspectRatio;
+				this.shape.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoFalse;
+			}
+
+			public void Dispose() {
+				this.shape.LockAspectRatio = this.capture;
+			}
+		}
+
 		public ArrangeGridAction() : base("arrange_grid") { }
 
 		private List<List<PowerPoint.Shape>> MakeRows(ImmutableList<PowerPoint.Shape> shapes) {
 			shapes = (
 				from shape in shapes
-				orderby shape.Top + 1.0 / 8.0 * shape.Height
+				orderby shape.Top + 1.0 / 2.0 * shape.Height
 				select shape
 				).ToImmutableList();
 			var result = new List<List<PowerPoint.Shape>>();
 			var currentRow = new List<PowerPoint.Shape>();
 			var scanline = shapes[0].Top + 7.0 / 8.0 * shapes[0].Height;
 			foreach (var shape in shapes) {
-				if (shape.Top + 1.0 / 8.0 * shape.Height > scanline) {
+				if (shape.Top + 1.0 / 2.0 * shape.Height > scanline) {
 					result.Add(currentRow);
 					currentRow = new List<PowerPoint.Shape>();
 				}
@@ -167,14 +183,14 @@ namespace hztoolbar.actions {
 		private List<List<PowerPoint.Shape>> MakeColumns(ImmutableList<PowerPoint.Shape> shapes) {
 			shapes = (
 				from shape in shapes
-				orderby shape.Left + 1.0 / 8.0 * shape.Width
+				orderby shape.Left + 1.0 / 2.0 * shape.Width
 				select shape
 				).ToImmutableList();
 			var result = new List<List<PowerPoint.Shape>>();
 			var currentColumn = new List<PowerPoint.Shape>();
 			var scanline = shapes[0].Left + 7.0 / 8.0 * shapes[0].Width;
 			foreach (var shape in shapes) {
-				if (shape.Left + 1.0 / 8.0 * shape.Width > scanline) {
+				if (shape.Left + 1.0 / 2.0 * shape.Width > scanline) {
 					result.Add(currentColumn);
 					currentColumn = new List<PowerPoint.Shape>();
 				}
@@ -187,43 +203,43 @@ namespace hztoolbar.actions {
 			return result;
 		}
 
-		private void AlignRows(ImmutableList<PowerPoint.Shape> shapes, int gutter, bool vertical_resize) {
+		private void AlignRows(ImmutableList<PowerPoint.Shape> shapes, float gutter, bool vertical_resize) {
 			var rows = MakeRows(shapes);
 			var top = rows[0].Min(it => it.Top);
 			foreach (var row in rows) {
 				var max_height = 0f;
-				var next_top = top;
 				foreach (var shape in row) {
 					shape.Top = top;
-					next_top = Math.Max(next_top, shape.Top + shape.Height);
 					max_height = Math.Max(max_height, shape.Height);
 				}
 				if (vertical_resize) {
 					foreach (var shape in row) {
-						shape.Height = max_height;
+						using (new WithoutLockedAspectRatio(shape)) {
+							shape.Height = max_height;
+						}
 					}
 				}
-				top = next_top + gutter;
+				top = top + max_height + gutter;
 			}
 		}
 
-		private void AlignColumns(ImmutableList<PowerPoint.Shape> shapes, int gutter, bool horizontal_resize) {
+		private void AlignColumns(ImmutableList<PowerPoint.Shape> shapes, float gutter, bool horizontal_resize) {
 			var columns = MakeColumns(shapes);
 			var left = columns[0].Min(it => it.Left);
 			foreach (var col in columns) {
 				var max_width = 0f;
-				var next_left = left;
 				foreach (var shape in col) {
 					shape.Left = left;
-					next_left = Math.Max(next_left, shape.Left + shape.Width);
 					max_width = Math.Max(max_width, shape.Width);
 				}
 				if (horizontal_resize) {
 					foreach (var shape in col) {
-						shape.Width = max_width;
+						using (new WithoutLockedAspectRatio(shape)) {
+							shape.Width = max_width;
+						}
 					}
 				}
-				left = next_left + gutter;
+				left = left + max_width + gutter;
 			}
 		}
 
@@ -231,7 +247,7 @@ namespace hztoolbar.actions {
 			return GetSelectedShapes();
 		}
 
-		protected override void DoRun(ImmutableList<PowerPoint.Shape> shapes, int horizontal_gutter, int vertical_gutter, bool horizontal_resize, bool vertical_resize) {
+		protected override void DoRun(ImmutableList<PowerPoint.Shape> shapes, float horizontal_gutter, float vertical_gutter, bool horizontal_resize, bool vertical_resize) {
 			AlignRows(shapes, vertical_gutter, vertical_resize);
 			AlignColumns(shapes, horizontal_gutter, horizontal_resize);
 		}

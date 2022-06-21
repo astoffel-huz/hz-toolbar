@@ -6,20 +6,25 @@
 
 				<group id="text_actions" getLabel="GetLabel">
 					<button id="swap_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
+					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  size="large" screentip="Screentip" supertip="Supertip"/>
 
-						<!--<button id="text_margin_none" tag="text_margin:none" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-						<button id="text_margin_small" tag="text_margin:small" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-						<button id="text_margin_normal" tag="text_margin:normal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-						<button id="text_margin_large" tag="text_margin:large" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
-						<button id="default_text_margins" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>-->
+					<splitButton id="text_margin_splitbutton" size="large">
+						<button id="text_margin_default" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip"/>
+						<menu id="text_margin_menu">
+							<button id="text_margin_none" tag="text_margin:none" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" />
+							<button id="text_margin_small" tag="text_margin:small" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" />
+							<button id="text_margin_normal" tag="text_margin:normal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" />
+							<button id="text_margin_large" tag="text_margin:large" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" />
+							<button id="text_margin_custom" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" />
+						</menu>
+					</splitButton>
 
-					<button id="change_language_en" tag="change_language:en" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="normal"/>
-					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="normal"/>
+					<button id="change_language_en" tag="change_language:en" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal"/>
+					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal"/>
 				</group>
 
 				<group id="shape_actions" getLabel="GetLabel" >
-					
+
 					<control idMso="ShapeChangeShapeGallery"/>
 
 					<button id="copy_shape_type" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />

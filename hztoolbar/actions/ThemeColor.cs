@@ -28,6 +28,8 @@ namespace hztoolbar.actions {
 		protected override IEnumerable<PowerPoint.Shape> GetSelectedShapes() {
 			return from shape in base.GetSelectedShapes()
 				   where shape.Type == Office.MsoShapeType.msoAutoShape
+					|| shape.Type == Office.MsoShapeType.msoTextBox
+					|| shape.Type == Office.MsoShapeType.msoPlaceholder
 				   select shape;
 		}
 

@@ -673,6 +673,60 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom margins.
+        /// </summary>
+        public static string text_margin_custom_label {
+            get {
+                return ResourceManager.GetString("text_margin_custom_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset margins.
+        /// </summary>
+        public static string text_margin_default_label {
+            get {
+                return ResourceManager.GetString("text_margin_default_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Large margins.
+        /// </summary>
+        public static string text_margin_large_label {
+            get {
+                return ResourceManager.GetString("text_margin_large_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No margins.
+        /// </summary>
+        public static string text_margin_none_label {
+            get {
+                return ResourceManager.GetString("text_margin_none_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal margins.
+        /// </summary>
+        public static string text_margin_normal_label {
+            get {
+                return ResourceManager.GetString("text_margin_normal_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small margins.
+        /// </summary>
+        public static string text_margin_small_label {
+            get {
+                return ResourceManager.GetString("text_margin_small_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vertical fit to guides.
         /// </summary>
         public static string vertical_resize_guide_label {

@@ -33,21 +33,21 @@
         <hc:OutlineText Text="{x:Static p:Strings.split_rectangle_dialog_columns_label}" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Right" />
         <hc:NumericUpDown 
             x:Name="numRowsInput" 
-            Value="{Binding Path=NumRows, Mode=TwoWay}"
+            Value="{Binding Path=NumRows, Mode=TwoWay}" ValueFormat="N2"
             Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
             Margin="2,2,2,2" TabIndex="1" Minimum="1" Height="34"
         />
         <hc:NumericUpDown
             x:Name="rowGutterInput" 
-            Value="{Binding Path=RowGutter, Mode=TwoWay}"
+            Value="{Binding Path=RowGutter, Mode=TwoWay}" ValueFormat="N2"
             Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="2,2,2,2" Minimum="0" TabIndex="3"/>
         <hc:NumericUpDown
             x:Name="numColumnsInput" 
-            Value="{Binding Path=NumColumns, Mode=TwoWay}"
+            Value="{Binding Path=NumColumns, Mode=TwoWay}" ValueFormat="N2"
             Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="2,2,2,2" Minimum="1" TabIndex="2"/>
         <hc:NumericUpDown 
             x:Name="columnGutterInput" 
-            Value="{Binding Path=ColumnGutter, Mode=TwoWay}"
+            Value="{Binding Path=ColumnGutter, Mode=TwoWay}" ValueFormat="N2"
             Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="2,2,2,2" Minimum="0" TabIndex="4"/>
         <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3">
             <Grid.RowDefinitions>

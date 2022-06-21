@@ -31,7 +31,7 @@ namespace hztoolbar.actions {
 		private readonly Window window;
 
 		public float TopMargin {
-			get => (int)GetValue(TopMarginProperty);
+			get => (float)GetValue(TopMarginProperty);
 			set => SetValue(TopMarginProperty, value);
 		}
 
@@ -39,7 +39,7 @@ namespace hztoolbar.actions {
 			DependencyProperty.Register("TopMargin", typeof(float), typeof(TextMarginControl), new PropertyMetadata(OnPropertyChanged));
 
 		public float LeftMargin {
-			get => (int)GetValue(LeftMarginProperty);
+			get => (float)GetValue(LeftMarginProperty);
 			set => SetValue(LeftMarginProperty, value);
 		}
 
@@ -47,7 +47,7 @@ namespace hztoolbar.actions {
 			DependencyProperty.Register("LeftMargin", typeof(float), typeof(TextMarginControl), new PropertyMetadata(OnPropertyChanged));
 
 		public float BottomMargin {
-			get => (int)GetValue(BottomMarginProperty);
+			get => (float)GetValue(BottomMarginProperty);
 			set => SetValue(BottomMarginProperty, value);
 		}
 
@@ -55,7 +55,7 @@ namespace hztoolbar.actions {
 			DependencyProperty.Register("BottomMargin", typeof(float), typeof(TextMarginControl), new PropertyMetadata(OnPropertyChanged));
 
 		public float RightMargin {
-			get => (int)GetValue(RightMarginProperty);
+			get => (float)GetValue(RightMarginProperty);
 			set => SetValue(RightMarginProperty, value);
 		}
 
