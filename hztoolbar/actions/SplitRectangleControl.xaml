@@ -21,16 +21,17 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <hc:OutlineText Text="{x:Static p:Strings.split_rectangle_dialog_cells_label}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,2,2,2" />
-        <hc:OutlineText Text="{x:Static p:Strings.split_rectangle_dialog_gutter_label}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,2,2" />
-        <hc:OutlineText Text="{x:Static p:Strings.split_rectangle_dialog_rows_label}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2,2,2,2"  />
-        <hc:OutlineText Text="{x:Static p:Strings.split_rectangle_dialog_columns_label}" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Right" />
+        <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_cells_label}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,2,2,2" />
+        <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_gutter_label}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,2,2" />
+        <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_rows_label}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2,2,2,2"  />
+        <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_columns_label}" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Right" />
         <hc:NumericUpDown 
             x:Name="numRowsInput" 
             Value="{Binding Path=NumRows, Mode=TwoWay}" ValueFormat="N2"
@@ -61,5 +62,6 @@
             <Button x:Name="cancelButton" Grid.Column="1" Content="{x:Static p:Strings.split_rectangle_dialog_cancel_label}" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" Margin="1,4,1,1" IsCancel="True"/>
             <Button x:Name="okButton" Grid.Column="2" Content="{x:Static p:Strings.split_rectangle_dialog_ok_label}" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" Margin="8,4,1,1" IsDefault="True" Click="onOkClick"/>
         </Grid>
+        <hc:SimpleText Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="0,8,0,0" Grid.Row="4" VerticalAlignment="Top" Text="by H&amp;Z Solutions" FontSize="8"/>
     </Grid>
 </UserControl>

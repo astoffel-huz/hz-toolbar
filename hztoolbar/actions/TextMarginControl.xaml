@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -44,5 +45,6 @@
             <Button x:Name="save" Content="{x:Static p:Strings.arrange_shape_settings_dialog_save_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1" Click="OnSaveClickHandler" Style="{DynamicResource ButtonPrimary}"/>
             <Button x:Name="close" Content="{x:Static p:Strings.arrange_shape_settings_dialog_close_label}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="2" IsDefault="True" Click="OnCloseClickHandler" Style="{DynamicResource ButtonWarning}"/>
         </Grid>
+        <hc:SimpleText Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="4" VerticalAlignment="Top" FontSize="8" Text="by H&amp;Z Solutions"/>
     </Grid>
 </UserControl>

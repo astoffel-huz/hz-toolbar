@@ -103,11 +103,12 @@ namespace hztoolbar.actions {
 					: Color.White.ToArgb();
 
 				foreach (var shape in shapes) {
-					shape.Fill.Solid();
-					shape.Fill.BackColor.RGB = color.Value;
-					shape.Fill.ForeColor.RGB = color.Value;
 
 					if (shape.HasTextFrame == Office.MsoTriState.msoTrue || shape.HasTextFrame == Office.MsoTriState.msoCTrue) {
+						// TODO: validate whether it is true that only shapes with text frames can be filled
+						shape.Fill.Solid();
+						shape.Fill.BackColor.RGB = color.Value;
+						shape.Fill.ForeColor.RGB = color.Value;
 						shape.TextFrame.TextRange.Font.Color.RGB = textColor;
 					}
 

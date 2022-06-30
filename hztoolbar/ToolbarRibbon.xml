@@ -4,7 +4,7 @@
 		<tabs>
 			<tab id="HZToolbar" label="H&amp;Z Toolbar">
 
-				<group id="text_actions" getLabel="GetLabel">
+				<group id="text_actions" getLabel="GetLabel" autoScale="true">
 					<button id="swap_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
 					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  size="large" screentip="Screentip" supertip="Supertip"/>
 
@@ -23,7 +23,7 @@
 					<button id="change_language_de" tag="change_language:de" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal"/>
 				</group>
 
-				<group id="shape_actions" getLabel="GetLabel" >
+				<group id="shape_actions" getLabel="GetLabel" autoScale="true" >
 
 					<control idMso="ShapeChangeShapeGallery"/>
 
@@ -43,7 +43,7 @@
 					<button id="split_rectangle" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
 				</group>
 
-				<group id="arrange_actions" getLabel="GetLabel">
+				<group id="arrange_actions" getLabel="GetLabel" autoScale="true">
 					<button id="arrange_horizontal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
 					<button id="arrange_vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large"/>
 					<button id="arrange_magnet" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
@@ -67,7 +67,7 @@
 					</dialogBoxLauncher>
 				</group>
 
-				<group id="guideline_actions" getLabel="GetLabel">
+				<group id="guideline_actions" getLabel="GetLabel" autoScale="true">
 					<button id="align_guide_top" tag="align_guide:top" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 					<button id="align_guide_bottom" tag="align_guide:bottom" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 					<button id="align_guide_left" tag="align_guide:left" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
@@ -79,7 +79,7 @@
 					<button id="vertical_resize_guide" tag="resize_guide:vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 				</group>
 
-				<group id="color_actions" getLabel="GetLabel" >
+				<group id="color_actions" getLabel="GetLabel" autoScale="true">
 					<button id="apply_background_dark1_theme_color" tag="apply_background_theme_color:dark1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_background_light1_theme_color" tag="apply_background_theme_color:light1" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_background_dark2_theme_color" tag="apply_background_theme_color:dark2" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
@@ -109,6 +109,10 @@
 					<button id="apply_line_accent4_theme_color" tag="apply_line_theme_color:accent4" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_line_accent5_theme_color" tag="apply_line_theme_color:accent5" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 					<button id="apply_line_accent6_theme_color" tag="apply_line_theme_color:accent6" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
+				</group>
+
+				<group id="info">
+					<button id="about" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 				</group>
 			</tab>
 		</tabs>

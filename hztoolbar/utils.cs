@@ -449,7 +449,7 @@ namespace hztoolbar {
 		}
 
 		private static T? ResourceCacheLookup<T>(LinkedList<KeyValuePair<string, T?>> cache, string key, Func<string, T?> generator) where T : class {
-			const int MAX_CACHE_SIZE = 128;
+			const int MAX_CACHE_SIZE = 2048;
 			var node = cache.First;
 			while (node != null && node.Value.Key != key) {
 				node = node.Next;
