@@ -9,7 +9,7 @@
    id="svg5"
    inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
    sodipodi:docname="split_text.svg"
-   inkscape:export-filename="C:\Users\andreas.stoffel\source\repos\hztoolbar\hztoolbar\icons\clear_text.png"
+   inkscape:export-filename="split_text.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -32,7 +32,7 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="10.732997"
-     inkscape:cx="-2.1895096"
+     inkscape:cx="-38.153369"
      inkscape:cy="25.062897"
      inkscape:window-width="3440"
      inkscape:window-height="1377"
@@ -93,18 +93,6 @@
   </sodipodi:namedview>
   <defs
      id="defs2">
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient9623">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop9619" />
-      <stop
-         style="stop-color:#000000;stop-opacity:0;"
-         offset="1"
-         id="stop9621" />
-    </linearGradient>
     <pattern
        patternUnits="userSpaceOnUse"
        width="256"
@@ -656,15 +644,6 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
          id="path972-98" />
     </marker>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient9623"
-       id="linearGradient9625"
-       x1="24.692783"
-       y1="24.259808"
-       x2="32.652958"
-       y2="36.656891"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -673,21 +652,34 @@
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:3.96667;stroke-dasharray:none;stroke-opacity:1"
        id="rect4907"
-       width="49.007751"
-       height="44.030746"
-       x="9.9692574"
-       y="9.9692564" />
+       width="53.852623"
+       height="53.161465"
+       x="5.1243844"
+       y="6.1492615" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:46.1866px;line-height:1.25;font-family:sans-serif;mix-blend-mode:normal;fill-opacity:1;stroke:none;stroke-width:0.999998;fill-rule:nonzero;fill:url(#linearGradient9625)"
-       x="15.947403"
-       y="53.523094"
-       id="text2434"
-       transform="scale(1.1470504,0.87180126)"><tspan
+       style="font-style:normal;font-weight:normal;font-size:24px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+       x="11.646327"
+       y="29.907768"
+       id="text1627"><tspan
          sodipodi:role="line"
-         id="tspan2432"
-         x="15.947403"
-         y="53.523094"
-         style="fill-opacity:1;stroke-width:0.999998;fill-rule:nonzero;fill:url(#linearGradient9625)">T</tspan></text>
+         id="tspan1625"
+         x="11.646327"
+         y="29.907768">Foo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:24px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+       x="11.611191"
+       y="50.323372"
+       id="text1627-4"><tspan
+         sodipodi:role="line"
+         id="tspan1625-8"
+         x="11.611191"
+         y="50.323372">Bar</tspan></text>
+    <path
+       style="fill:none;stroke:#d8356e;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0;fill-opacity:1"
+       d="m -0.09317036,32.050694 64.38089936,0"
+       id="path2121"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

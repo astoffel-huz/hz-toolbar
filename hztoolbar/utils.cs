@@ -251,9 +251,12 @@ namespace hztoolbar {
 			public readonly Office.MsoTriState DoubleStrikeThrough;
 			public readonly Office.MsoTriState Subscript;
 			public readonly Office.MsoTriState Superscript;
+			public readonly string Name;
+			public readonly float Size;
 
 			public FontEmphasisSnapshot(Office.MsoTriState bold, Office.MsoTriState italic, Office.MsoTextStrike strike,
-				Office.MsoTextUnderlineType underlineStyle, Office.MsoTriState doubleStrikeThrough, Office.MsoTriState subscript, Office.MsoTriState superscript) {
+				Office.MsoTextUnderlineType underlineStyle, Office.MsoTriState doubleStrikeThrough, Office.MsoTriState subscript, Office.MsoTriState superscript,
+				string name, float size) {
 				this.Bold = bold;
 				this.Italic = italic;
 				this.Strike = strike;
@@ -261,6 +264,8 @@ namespace hztoolbar {
 				this.DoubleStrikeThrough = doubleStrikeThrough;
 				this.Subscript = subscript;
 				this.Superscript = superscript;
+				this.Name = name;
+				this.Size = size;
 			}
 		}
 
@@ -272,7 +277,9 @@ namespace hztoolbar {
 				font.UnderlineStyle,
 				font.DoubleStrikeThrough,
 				font.Subscript,
-				font.Superscript
+				font.Superscript,
+				font.Name,
+				font.Size
 				);
 		}
 
@@ -284,6 +291,8 @@ namespace hztoolbar {
 			to.DoubleStrikeThrough = snapshot.DoubleStrikeThrough;
 			to.Subscript = snapshot.Subscript;
 			to.Superscript = snapshot.Superscript;
+			to.Name = snapshot.Name;
+			to.Size = snapshot.Size;
 		}
 
 		public static void Copy(Office.Font2 to, Office.Font2 from) {
@@ -294,6 +303,8 @@ namespace hztoolbar {
 			to.DoubleStrikeThrough = from.DoubleStrikeThrough;
 			to.Subscript = from.Subscript;
 			to.Superscript = from.Superscript;
+			to.Name = from.Name;
+			to.Size = from.Size;
 		}
 		#endregion
 
@@ -306,7 +317,6 @@ namespace hztoolbar {
 
 			public CharacterRangeSnapshot(FontEmphasisSnapshot emphasis, IEnumerable<CharacterRangeSnapshot> runs) {
 				this.Emphasis = emphasis;
-
 				this.Runs = runs.ToImmutableList();
 			}
 		}
@@ -333,6 +343,12 @@ namespace hztoolbar {
 				if (!(run.Start == from.Start && run.Length == from.Length)) {
 					CopyCharacters(to.Characters[run.Start, run.Length], run);
 				}
+			}
+		}
+
+		public static void TransferCharacters(Office.TextRange2 to, Office.TextRange2 from, int toOffset) {
+			foreach (Office.TextRange2 run in from) {
+				Copy(to.Characters[run.Start + toOffset, run.Length].Font, run.Font);
 			}
 		}
 
@@ -426,6 +442,10 @@ namespace hztoolbar {
 		}
 		#endregion
 
+		public static bool IsMetricRegion() {
+			return System.Globalization.RegionInfo.CurrentRegion.IsMetric;
+		}
+
 		public static PowerPoint.DocumentWindow? GetActiveWindow() {
 			var application = Globals.ThisAddIn.Application;
 			if (application.Windows.Count == 0) { return null; }
@@ -466,7 +486,7 @@ namespace hztoolbar {
 			return node.Value.Value;
 		}
 
-		private static LinkedList<KeyValuePair<string, Bitmap?>> IMAGE_CACHE = new LinkedList<KeyValuePair<string, Bitmap?>>();
+		private static readonly LinkedList<KeyValuePair<string, Bitmap?>> IMAGE_CACHE = new LinkedList<KeyValuePair<string, Bitmap?>>();
 
 		private static Bitmap? DoLoadImageResource(string resourceName) {
 			Assembly asm = Assembly.GetExecutingAssembly();
@@ -487,7 +507,7 @@ namespace hztoolbar {
 			return ResourceCacheLookup(IMAGE_CACHE, resourceName, DoLoadImageResource);
 		}
 
-		private static LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>> COLORED_BITMAP_CACHE = new LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>>();
+		private static readonly LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>> COLORED_BITMAP_CACHE = new LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>>();
 
 		private static Bitmap DoApplyColorToBitmap(Bitmap image, Color color) {
 			Bitmap result = new Bitmap(image);
@@ -583,8 +603,9 @@ namespace hztoolbar {
 				ShowInTaskbar = false,
 				WindowStartupLocation = WindowStartupLocation.CenterOwner,
 			};
-			var interop = new WindowInteropHelper(window);
-			interop.Owner = Process.GetCurrentProcess().MainWindowHandle;
+			new WindowInteropHelper(window) {
+				Owner = Process.GetCurrentProcess().MainWindowHandle
+			};
 			return window;
 		}
 

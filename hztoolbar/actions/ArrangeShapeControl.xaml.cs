@@ -13,34 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace hztoolbar.actions
-{
-    /// <summary>
-    /// Interaction logic for ArrangeShapeControl.xaml
-    /// </summary>
-    public partial class ArrangeShapeControl : UserControl
-    {
-        private readonly Window window;
+namespace hztoolbar.actions {
+	/// <summary>
+	/// Interaction logic for ArrangeShapeControl.xaml
+	/// </summary>
+	public partial class ArrangeShapeControl : UserControl {
+		private readonly Window window;
 
-		public event EventHandler ValueChanged;
-
-        public ArrangeShapeControl(Window window)
-        {
-            InitializeComponent();
-            this.window = window;
-        }
-
-		protected virtual void OnValueChange() {
-			ValueChanged?.Invoke(this, EventArgs.Empty);
+		public ArrangeShapeControl(Window window) {
+			InitializeComponent();
+			this.window = window;
 		}
 
-        private void OnOkClickHandler(object sender, RoutedEventArgs e)
-        {
-            this.window.DialogResult = true;
-        }
-
-		private void OnValueChangeHandler(object sender, HandyControl.Data.FunctionEventArgs<double> e) {
-			OnValueChange();
+		private void OnOkClickHandler(object sender, RoutedEventArgs e) {
+			this.window.DialogResult = true;
 		}
+
 	}
 }

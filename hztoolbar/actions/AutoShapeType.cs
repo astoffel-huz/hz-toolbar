@@ -307,7 +307,7 @@ namespace hztoolbar.actions {
 		}
 
 		public override bool IsEnabled(string arg = "") {
-			return GetSelectedShapes().Take(2).Count() > 0;
+			return GetSelectedShapes().Take(2).Count() > 1;
 		}
 
 		public override bool Run(string arg = "") {

@@ -286,7 +286,7 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Grid (Interactive).
+        ///   Looks up a localized string similar to Interactive gutters.
         /// </summary>
         public static string arrange_grid_control_label {
             get {
@@ -304,7 +304,7 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Grid (large).
+        ///   Looks up a localized string similar to Large gutters.
         /// </summary>
         public static string arrange_grid_large_label {
             get {
@@ -313,7 +313,7 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Grid (medium).
+        ///   Looks up a localized string similar to Normal gutters.
         /// </summary>
         public static string arrange_grid_medium_label {
             get {
@@ -322,7 +322,7 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Grid (none).
+        ///   Looks up a localized string similar to No gutters.
         /// </summary>
         public static string arrange_grid_none_label {
             get {
@@ -331,7 +331,7 @@ namespace hztoolbar {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Grid (small).
+        ///   Looks up a localized string similar to Small gutters.
         /// </summary>
         public static string arrange_grid_small_label {
             get {
@@ -502,6 +502,15 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy shape.
+        /// </summary>
+        public static string copy_shape_label {
+            get {
+                return ResourceManager.GetString("copy_shape_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy type.
         /// </summary>
         public static string copy_shape_type_label {
@@ -561,6 +570,15 @@ namespace hztoolbar {
         public static string horizontal_resize_guide_label {
             get {
                 return ResourceManager.GetString("horizontal_resize_guide_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge texts.
+        /// </summary>
+        public static string merge_text_label {
+            get {
+                return ResourceManager.GetString("merge_text_label", resourceCulture);
             }
         }
         
@@ -651,6 +669,15 @@ namespace hztoolbar {
         public static string split_rectangle_label {
             get {
                 return ResourceManager.GetString("split_rectangle_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split Text.
+        /// </summary>
+        public static string split_text_label {
+            get {
+                return ResourceManager.GetString("split_text_label", resourceCulture);
             }
         }
         

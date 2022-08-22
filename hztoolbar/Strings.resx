@@ -193,22 +193,22 @@
     <value>Arrange shapes</value>
   </data>
   <data name="arrange_grid_control_label" xml:space="preserve">
-    <value>To Grid (Interactive)</value>
+    <value>Interactive gutters</value>
   </data>
   <data name="arrange_grid_label" xml:space="preserve">
     <value>To Grid</value>
   </data>
   <data name="arrange_grid_large_label" xml:space="preserve">
-    <value>To Grid (large)</value>
+    <value>Large gutters</value>
   </data>
   <data name="arrange_grid_medium_label" xml:space="preserve">
-    <value>To Grid (medium)</value>
+    <value>Normal gutters</value>
   </data>
   <data name="arrange_grid_none_label" xml:space="preserve">
-    <value>To Grid (none)</value>
+    <value>No gutters</value>
   </data>
   <data name="arrange_grid_small_label" xml:space="preserve">
-    <value>To Grid (small)</value>
+    <value>Small gutters</value>
   </data>
   <data name="arrange_horizontal_label" xml:space="preserve">
     <value>Horizontal</value>
@@ -264,6 +264,9 @@
   <data name="color_actions_label" xml:space="preserve">
     <value>Theme color</value>
   </data>
+  <data name="copy_shape_label" xml:space="preserve">
+    <value>Copy shape</value>
+  </data>
   <data name="copy_shape_type_label" xml:space="preserve">
     <value>Copy type</value>
   </data>
@@ -284,6 +287,9 @@
   </data>
   <data name="horizontal_resize_guide_label" xml:space="preserve">
     <value>Horizontal fit to guides</value>
+  </data>
+  <data name="merge_text_label" xml:space="preserve">
+    <value>Merge texts</value>
   </data>
   <data name="repeat_last_shape_change_label" xml:space="preserve">
     <value>Change Shape</value>
@@ -314,6 +320,9 @@
   </data>
   <data name="split_rectangle_label" xml:space="preserve">
     <value>Split rectangle</value>
+  </data>
+  <data name="split_text_label" xml:space="preserve">
+    <value>Split Text</value>
   </data>
   <data name="swap_text_label" xml:space="preserve">
     <value>Swap text</value>

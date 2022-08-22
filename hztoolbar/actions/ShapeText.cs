@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Windows.Navigation;
 using Office = Microsoft.Office.Core;
 
 namespace hztoolbar.actions {
@@ -24,9 +25,7 @@ namespace hztoolbar.actions {
 		public override bool IsEnabled(string arg = "") {
 			return GetSelectedShapes().Take(1).Count() > 0;
 		}
-
 	}
-
 
 	public class ShapeSwapText : AbstractTextAction {
 		public ShapeSwapText() : base("swap_text") { }
@@ -53,13 +52,80 @@ namespace hztoolbar.actions {
 
 		public override bool Run(string arg = "") {
 			foreach (var shape in GetSelectedShapes()) {
-				shape.TextFrame.DeleteText();
+				var fontCapture = Utils.Capture(shape.TextFrame2.TextRange.Font);
+				shape.TextFrame2.DeleteText();
+				Utils.Apply(shape.TextFrame2.TextRange.Font, fontCapture);
 			}
 			return false;
 		}
 	}
 
-	public class ChangeLanguage : AbstractTextAction {
+	public class SplitText : ToolbarAction {
+		public SplitText() : base("split_text") { }
+
+		private Selection? GetSelection() {
+
+			var activeWindow = Utils.GetActiveWindow();
+			if (activeWindow == null) {
+				return null;
+			}
+
+			var selection = activeWindow.Selection;
+
+			return selection.Type == PpSelectionType.ppSelectionText ? selection : null;
+		}
+
+		public override bool IsEnabled(string arg = "") {
+			return GetSelection() != null;
+		}
+
+		public override bool Run(string arg = "") {
+			var selection = GetSelection();
+			if (selection != null) {
+				foreach (Shape shape in selection.ShapeRange) {
+					var start = selection.TextRange2.Start;
+					var shapeRange = shape.TextFrame2.TextRange;
+					if (start < shapeRange.Length) {
+						var duplicate = shape.Duplicate();
+						var duplicateRange = duplicate.TextFrame2.TextRange;
+						shapeRange.Characters[start, shapeRange.Length - start + 1].Delete();
+						duplicateRange.Characters[1, start - 1].Delete();
+						shape.Height = shape.Height / 2.0f - Properties.Settings.Default.arrange_vertical_gutter / 2.0f;
+						duplicate.Left = shape.Left;
+						duplicate.Top = shape.Top + shape.Height + Properties.Settings.Default.arrange_vertical_gutter;
+						duplicate.Height = shape.Height;
+					}
+				}
+			}
+			return true;
+		}
+	}
+
+	public class MergeTextAction : AbstractTextAction {
+
+		public MergeTextAction() : base("merge_text") { }
+
+		public override bool Run(string arg = "") {
+			var selection = GetSelectedShapes().ToList();
+			if (selection.Count > 0) {
+				var pivot = selection[0];
+				var pivotTextRange = pivot.TextFrame2.TextRange;
+				foreach (var shape in selection.Skip(1)) {
+					if (pivotTextRange.Text.Last() != '\n') {
+						pivotTextRange.Text += "\n";
+					}
+					var shapeTextRange = shape.TextFrame2.TextRange;
+					var offset = pivotTextRange.Length;
+					pivotTextRange.InsertAfter(shapeTextRange.Text);
+					Utils.TransferCharacters(pivotTextRange, shapeTextRange, offset);
+					shape.Delete();
+				}
+			}
+			return true;
+		}
+	}
+
+	public class ChangeLanguageAction : AbstractTextAction {
 		private readonly ImmutableDictionary<string, Office.MsoLanguageID> LANGUAGES = new Dictionary<string, Office.MsoLanguageID>() {
 			["de"] = Office.MsoLanguageID.msoLanguageIDGerman,
 			["de-DE"] = Office.MsoLanguageID.msoLanguageIDGerman,
@@ -70,7 +136,7 @@ namespace hztoolbar.actions {
 
 		}.ToImmutableDictionary();
 
-		public ChangeLanguage() : base("change_language") { }
+		public ChangeLanguageAction() : base("change_language") { }
 
 		public override bool IsEnabled(string arg = "") {
 			return LANGUAGES.ContainsKey(arg) && (
@@ -115,9 +181,9 @@ namespace hztoolbar.actions {
 
 	}
 
-	public class DefaultTextMargin : AbstractChangeTextMargin {
+	public class DefaultTextMarginAction : AbstractChangeTextMargin {
 
-		public DefaultTextMargin() : base("text_margin_default") { }
+		public DefaultTextMarginAction() : base("text_margin_default") { }
 
 		public override bool Run(string arg = "") {
 			ChangeMargins(
@@ -155,9 +221,9 @@ namespace hztoolbar.actions {
 		}
 	}
 
-	public class CustomTextMargin : AbstractChangeTextMargin {
+	public class CustomTextMarginAction : AbstractChangeTextMargin {
 
-		public CustomTextMargin() : base("text_margin_custom") { }
+		public CustomTextMarginAction() : base("text_margin_custom") { }
 
 		public override bool Run(string arg = "") {
 			var shapes = GetSelectedShapes().ToList();
@@ -173,9 +239,9 @@ namespace hztoolbar.actions {
 				BottomMargin = bottom_margin,
 				RightMargin = right_margin,
 			};
-			EventHandler changeHandler = (s, e) => {
+			void changeHandler(object s, EventArgs e) {
 				ChangeMargins(shapes, control.TopMargin, control.LeftMargin, control.BottomMargin, control.RightMargin);
-			};
+			}
 			control.ValueChanged += changeHandler;
 			try {
 				window.Content = control;

@@ -7,6 +7,9 @@
 				<group id="text_actions" getLabel="GetLabel" autoScale="true">
 					<button id="swap_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip" size="large"/>
 					<button id="clear_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  size="large" screentip="Screentip" supertip="Supertip"/>
+					<button id="split_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  size="large" screentip="Screentip" supertip="Supertip"/>
+					<button id="merge_text" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  size="large" screentip="Screentip" supertip="Supertip"/>
+
 
 					<splitButton id="text_margin_splitbutton" size="large">
 						<button id="text_margin_default" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage"  getSupertip="GetSupertip"/>
@@ -25,6 +28,7 @@
 
 				<group id="shape_actions" getLabel="GetLabel" autoScale="true" >
 
+					<control idMso="ShapesInsertGallery"/>
 					<control idMso="ShapeChangeShapeGallery"/>
 
 					<button id="copy_shape_type" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
@@ -111,9 +115,6 @@
 					<button id="apply_line_accent6_theme_color" tag="apply_line_theme_color:accent6" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
 				</group>
 
-				<group id="info">
-					<button id="about" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="normal" showLabel="false"/>
-				</group>
 			</tab>
 		</tabs>
 	</ribbon>

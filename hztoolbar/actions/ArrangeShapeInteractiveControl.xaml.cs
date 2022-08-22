@@ -17,13 +17,13 @@ namespace hztoolbar.actions {
 
 		private readonly Window window;
 
-		public int HorizontalGutter {
-			get => (int)GetValue(HorizontalGutterProperty);
+		public float HorizontalGutter {
+			get => (float)GetValue(HorizontalGutterProperty);
 			set => SetValue(HorizontalGutterProperty, value);
 		}
 
 		public static readonly DependencyProperty HorizontalGutterProperty =
-			DependencyProperty.Register("HorizontalGutter", typeof(int), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
+			DependencyProperty.Register("HorizontalGutter", typeof(float), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
 
 		public bool HorizontalResize {
 			get => (bool)GetValue(HorizontalResizeProperty);
@@ -33,13 +33,13 @@ namespace hztoolbar.actions {
 		public static readonly DependencyProperty HorizontalResizeProperty =
 			DependencyProperty.Register("HorizontalResize", typeof(bool), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
 
-		public int VerticalGutter {
-			get => (int)GetValue(VerticalGutterProperty);
+		public float VerticalGutter {
+			get => (float)GetValue(VerticalGutterProperty);
 			set => SetValue(VerticalGutterProperty, value);
 		}
 
 		public static readonly DependencyProperty VerticalGutterProperty =
-			DependencyProperty.Register("VerticalGutter", typeof(int), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
+			DependencyProperty.Register("VerticalGutter", typeof(float), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
 
 		public bool VerticalResize {
 			get => (bool)GetValue(VerticalResizeProperty);

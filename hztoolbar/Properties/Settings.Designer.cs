@@ -26,9 +26,9 @@ namespace hztoolbar.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int arrange_horizontal_gutter {
+        public float arrange_horizontal_gutter {
             get {
-                return ((int)(this["arrange_horizontal_gutter"]));
+                return ((float)(this["arrange_horizontal_gutter"]));
             }
             set {
                 this["arrange_horizontal_gutter"] = value;
@@ -38,9 +38,9 @@ namespace hztoolbar.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int arrange_vertical_gutter {
+        public float arrange_vertical_gutter {
             get {
-                return ((int)(this["arrange_vertical_gutter"]));
+                return ((float)(this["arrange_vertical_gutter"]));
             }
             set {
                 this["arrange_vertical_gutter"] = value;

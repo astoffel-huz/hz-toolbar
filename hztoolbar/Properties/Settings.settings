@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="hztoolbar.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="arrange_horizontal_gutter" Type="System.Int32" Scope="User">
+    <Setting Name="arrange_horizontal_gutter" Type="System.Single" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="arrange_vertical_gutter" Type="System.Int32" Scope="User">
+    <Setting Name="arrange_vertical_gutter" Type="System.Single" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="change_shape_type" Type="System.String" Scope="User">

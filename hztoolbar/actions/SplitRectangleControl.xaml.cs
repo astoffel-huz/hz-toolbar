@@ -31,14 +31,14 @@ namespace hztoolbar.actions
         public static readonly DependencyProperty NumRowsProperty =
             DependencyProperty.Register("NumRows", typeof(int), typeof(SplitRectangleControl));
 
-        public int RowGutter
+        public float RowGutter
         {
-            get => (int)GetValue(RowGutterProperty);
+            get => (float)GetValue(RowGutterProperty);
             set => SetValue(RowGutterProperty, value);
         }
 
         public static readonly DependencyProperty RowGutterProperty =
-            DependencyProperty.Register("RowGutter", typeof(int), typeof(SplitRectangleControl));
+            DependencyProperty.Register("RowGutter", typeof(float), typeof(SplitRectangleControl));
 
         public int NumColumns
         {
@@ -49,14 +49,14 @@ namespace hztoolbar.actions
         public static readonly DependencyProperty NumColumnsProperty =
             DependencyProperty.Register("NumColumns", typeof(int), typeof(SplitRectangleControl));
 
-        public int ColumnGutter
+        public float ColumnGutter
         {
-            get => (int)GetValue(ColumnGutterProperty);
+            get => (float)GetValue(ColumnGutterProperty);
             set => SetValue(ColumnGutterProperty, value);
         }
 
         public static readonly DependencyProperty ColumnGutterProperty =
-            DependencyProperty.Register("ColumnGutter", typeof(int), typeof(SplitRectangleControl));
+            DependencyProperty.Register("ColumnGutter", typeof(float), typeof(SplitRectangleControl));
 
         private readonly Window window;
 

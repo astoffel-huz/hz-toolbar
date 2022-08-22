@@ -228,11 +228,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Strings.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.de.resx</DependentUpon>
+    <Compile Include="controls\LengthInput.xaml.cs">
+      <DependentUpon>LengthInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="controls\ValueConverter.cs" />
     <Compile Include="utils.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -279,10 +278,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Strings.de.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.de.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
@@ -322,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\LengthInput.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -414,6 +413,12 @@
     <EmbeddedResource Include="icons\arrange_grid_medium.png" />
     <EmbeddedResource Include="icons\arrange_grid_none.png" />
     <EmbeddedResource Include="icons\arrange_grid_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\split_text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\merge_text.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
