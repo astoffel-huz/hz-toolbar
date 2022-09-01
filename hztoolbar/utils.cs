@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using HandyControl.Data;
+using hztoolbar.Properties;
 using Microsoft.Office.Core;
 using System;
 using System.Collections.Generic;
@@ -10,16 +12,25 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using Office = Microsoft.Office.Core;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 
 
 namespace hztoolbar {
+	using ColorReplaceImageCache = LinkedList<KeyValuePair<Tuple<Bitmap, ImmutableDictionary<int, int>, Color>, Bitmap>>;
+
+
 
 	/// <summary>
 	/// Class defining utility functions and tools.
 	/// </summary>
 	public static class Utils {
+
+		public enum DefaultLength {
+			Small, Normal, Large
+		}
+
 
 		#region BulletFormat2
 		public class BulletFormatSnapshot {
@@ -459,6 +470,24 @@ namespace hztoolbar {
 			return (PowerPoint.Slide)window.View.Slide;
 		}
 
+		public static float? GetDefaultLength(string length) {
+			return length switch {
+				"small" => Settings.Default.default_small_length,
+				"normal" => Settings.Default.default_normal_length,
+				"large" => Settings.Default.default_large_length,
+				_ => null
+			};
+		}
+
+		public static float? GetDefaultLength(DefaultLength length) {
+			return length switch {
+				DefaultLength.Small => Settings.Default.default_small_length,
+				DefaultLength.Normal => Settings.Default.default_normal_length,
+				DefaultLength.Large => Settings.Default.default_large_length,
+				_ => null
+			};
+		}
+
 		public static string GetResourceString(string key, string defaultValue = "") {
 			try {
 				return Strings.ResourceManager.GetString(key, System.Globalization.CultureInfo.CurrentCulture);
@@ -468,24 +497,7 @@ namespace hztoolbar {
 			return defaultValue;
 		}
 
-		private static T? ResourceCacheLookup<T>(LinkedList<KeyValuePair<string, T?>> cache, string key, Func<string, T?> generator) where T : class {
-			const int MAX_CACHE_SIZE = 2048;
-			var node = cache.First;
-			while (node != null && node.Value.Key != key) {
-				node = node.Next;
-			}
-			if (node == null) {
-				node = new LinkedListNode<KeyValuePair<string, T?>>(new KeyValuePair<string, T?>(key, generator(key)));
-				while (cache.Count >= MAX_CACHE_SIZE - 1) {
-					cache.RemoveLast();
-				}
-			} else {
-				cache.Remove(node);
-			}
-			cache.AddFirst(node);
-			return node.Value.Value;
-		}
-
+		private static readonly int MAX_CACHE_SIZE = 1024;
 		private static readonly LinkedList<KeyValuePair<string, Bitmap?>> IMAGE_CACHE = new LinkedList<KeyValuePair<string, Bitmap?>>();
 
 		private static Bitmap? DoLoadImageResource(string resourceName) {
@@ -504,20 +516,22 @@ namespace hztoolbar {
 		}
 
 		public static Bitmap? LoadImageResource(string resourceName) {
-			return ResourceCacheLookup(IMAGE_CACHE, resourceName, DoLoadImageResource);
-		}
-
-		private static readonly LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>> COLORED_BITMAP_CACHE = new LinkedList<KeyValuePair<Tuple<Bitmap, int>, Bitmap>>();
-
-		private static Bitmap DoApplyColorToBitmap(Bitmap image, Color color) {
-			Bitmap result = new Bitmap(image);
-			for (var y = 0; y < result.Height; ++y) {
-				for (var x = 0; x < result.Width; ++x) {
-					var pixelColor = result.GetPixel(x, y);
-					result.SetPixel(x, y, Color.FromArgb(pixelColor.A, color.R, color.G, color.B));
-				}
+			var node = IMAGE_CACHE.First;
+			while (node != null && (node.Value.Key != resourceName)) {
+				node = node.Next;
 			}
-			return result;
+			if (node == null) {
+				node = new LinkedListNode<KeyValuePair<string, Bitmap?>>(new KeyValuePair<string, Bitmap?>(
+					resourceName, DoLoadImageResource(resourceName)
+					));
+				while (IMAGE_CACHE.Count > MAX_CACHE_SIZE - 1) {
+					IMAGE_CACHE.RemoveLast();
+				}
+			} else {
+				IMAGE_CACHE.Remove(node);
+			}
+			IMAGE_CACHE.AddFirst(node);
+			return node.Value.Value;
 		}
 
 		/// <summary>
@@ -527,28 +541,56 @@ namespace hztoolbar {
 		/// <param name="color">the new color value</param>
 		/// <returns><c>image</c> where all rgb values are replaced with the rbg values from <c>color</c></returns>
 		public static Bitmap ReplaceBitmapColor(Bitmap image, Color color) {
-			var node = COLORED_BITMAP_CACHE.First;
-			while (node != null && !(node.Value.Key.Item1 == image && node.Value.Key.Item2 == color.ToArgb())) {
-				node = node.Next;
-			}
+			return ReplaceBitmapColor(image, new Dictionary<Color, Color>(), color);
+		}
 
-			if (node == null) {
-				node = new LinkedListNode<KeyValuePair<Tuple<Bitmap, int>, Bitmap>>(new KeyValuePair<Tuple<Bitmap, int>, Bitmap>(
-					Tuple.Create(image, color.ToArgb()), DoApplyColorToBitmap(image, color)
-				));
-			} else {
-				COLORED_BITMAP_CACHE.Remove(node);
-			}
-			COLORED_BITMAP_CACHE.AddFirst(node);
+		private static readonly ColorReplaceImageCache COLOR_REPLACEMENT_IMAGE_CACHE = new ColorReplaceImageCache();
 
+		private static Bitmap DoReplaceBitmapColor(Bitmap image, ImmutableDictionary<int, int> lut, Color defaultColor) {
 			Bitmap result = new Bitmap(image);
+
+			var debug = new HashSet<Color>();
+
 			for (var y = 0; y < result.Height; ++y) {
 				for (var x = 0; x < result.Width; ++x) {
 					var pixelColor = result.GetPixel(x, y);
-					result.SetPixel(x, y, Color.FromArgb(pixelColor.A, color.R, color.G, color.B));
+					if (!debug.Contains(pixelColor)) {
+						debug.Add(pixelColor);
+					}
+					var keyColor = Color.FromArgb(255, pixelColor.R, pixelColor.G, pixelColor.B);
+					if (lut.TryGetValue(keyColor.ToArgb(), out int replaceRGB)) {
+						var replaceColor = Color.FromArgb(replaceRGB);
+						result.SetPixel(x, y, Color.FromArgb(pixelColor.A, replaceColor.R, replaceColor.G, replaceColor.B));
+					} else {
+						result.SetPixel(x, y, Color.FromArgb(pixelColor.A, defaultColor.R, defaultColor.G, defaultColor.B));
+					}
 				}
 			}
 			return result;
+		}
+
+		public static Bitmap ReplaceBitmapColor(Bitmap image, Dictionary<Color, Color> replacements, Color defaultColor) {
+			var lut = (
+				from entry in replacements
+				select (Color.FromArgb(255, entry.Key.R, entry.Key.G, entry.Key.B).ToArgb(), entry.Value.ToArgb())
+			).ToImmutableDictionary(entry => entry.Item1, entry => entry.Item2);
+			var node = COLOR_REPLACEMENT_IMAGE_CACHE.First;
+			while (node != null && (node.Value.Key.Item1 != image || !node.Value.Key.Item2.Equals(lut) || node.Value.Key.Item3 != defaultColor)) {
+				node = node.Next;
+			}
+			if (node == null) {
+				node = new LinkedListNode<KeyValuePair<Tuple<Bitmap, ImmutableDictionary<int, int>, Color>, Bitmap>>(
+					new KeyValuePair<Tuple<Bitmap, ImmutableDictionary<int, int>, Color>, Bitmap>(
+						Tuple.Create(image, lut, defaultColor), DoReplaceBitmapColor(image, lut, defaultColor)
+				));
+				while (COLOR_REPLACEMENT_IMAGE_CACHE.Count > MAX_CACHE_SIZE - 1) {
+					COLOR_REPLACEMENT_IMAGE_CACHE.RemoveLast();
+				}
+			} else {
+				COLOR_REPLACEMENT_IMAGE_CACHE.Remove(node);
+			}
+			COLOR_REPLACEMENT_IMAGE_CACHE.AddFirst(node);
+			return node.Value.Value;
 		}
 
 		/// <summary>
@@ -567,7 +609,7 @@ namespace hztoolbar {
 				where mapper(item) <= query + threshold
 				orderby mapper(item) descending
 				select item
-				);
+			);
 
 			return sorted.FirstOrDefault();
 		}
@@ -588,7 +630,7 @@ namespace hztoolbar {
 				where mapper(item) >= query - threshold
 				orderby mapper(item) ascending
 				select item
-				);
+			);
 			return sorted.FirstOrDefault();
 		}
 

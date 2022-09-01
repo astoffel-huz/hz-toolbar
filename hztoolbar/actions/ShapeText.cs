@@ -1,11 +1,11 @@
 ﻿#nullable enable
 
+using hztoolbar.Properties;
 using Microsoft.Office.Interop.PowerPoint;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Windows.Navigation;
 using Office = Microsoft.Office.Core;
 
 namespace hztoolbar.actions {
@@ -198,23 +198,36 @@ namespace hztoolbar.actions {
 	}
 
 	public class ChangeTextMargin : AbstractChangeTextMargin {
-		// H&Z Template 20223: x= 0.1"=7.2, y=0.05" = 3.6
-		private readonly ImmutableDictionary<string, (float top, float left, float bottom, float right)> MARGINS = new Dictionary<string, (float top, float left, float bottom, float right)>() {
-			["none"] = (0f, 0f, 0f, 0f),
-			["small"] = (1.8f, 3.6f, 1.8f, 3.6f),
-			["normal"] = (3.6f, 7.2f, 3.6f, 7.2f),
-			["large"] = (7.2f, 14.4f, 7.2f, 14.4f),
 
-		}.ToImmutableDictionary();
+		private readonly IImmutableSet<string> VALID_ARGUMENTS = new HashSet<string>() { "none", "small", "normal", "large" }.ToImmutableHashSet();
+
+		private (float top, float left, float bottom, float right) GetMargin(string arg) {
+			return arg switch {
+				"small" => (
+					Settings.Default.default_small_length, 2.0f * Settings.Default.default_small_length,
+					Settings.Default.default_small_length, 2.0f * Settings.Default.default_small_length
+				),
+				"normal" => (
+					Settings.Default.default_normal_length, 2.0f * Settings.Default.default_normal_length,
+					Settings.Default.default_normal_length, 2.0f * Settings.Default.default_normal_length
+				),
+				"large" => (
+					Settings.Default.default_large_length, 2.0f * Settings.Default.default_large_length,
+					Settings.Default.default_large_length, 2.0f * Settings.Default.default_large_length
+				),
+				_ => (0.0f, 0.0f, 0.0f, 0.0f)
+			};
+		}
 
 		public ChangeTextMargin() : base("text_margin") { }
 
 		public override bool IsEnabled(string arg = "") {
-			return MARGINS.ContainsKey(arg) && base.IsEnabled();
+			return VALID_ARGUMENTS.Contains(arg) && base.IsEnabled();
 		}
 
 		public override bool Run(string arg = "") {
-			if (MARGINS.TryGetValue(arg, out var margin)) {
+			if (VALID_ARGUMENTS.Contains(arg)) {
+				var margin = GetMargin(arg);
 				ChangeMargins(GetSelectedShapes(), margin.top, margin.left, margin.bottom, margin.right);
 			}
 			return false;

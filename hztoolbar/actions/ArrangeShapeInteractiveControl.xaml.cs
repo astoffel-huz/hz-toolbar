@@ -18,7 +18,7 @@ namespace hztoolbar.actions {
 		private readonly Window window;
 
 		public float HorizontalGutter {
-			get => (float)GetValue(HorizontalGutterProperty);
+			get => Math.Max(0.0f, (float)GetValue(HorizontalGutterProperty));
 			set => SetValue(HorizontalGutterProperty, value);
 		}
 
@@ -34,7 +34,7 @@ namespace hztoolbar.actions {
 			DependencyProperty.Register("HorizontalResize", typeof(bool), typeof(ArrangeShapeInteractiveControl), new PropertyMetadata(OnPropertyChanged));
 
 		public float VerticalGutter {
-			get => (float)GetValue(VerticalGutterProperty);
+			get => Math.Max(0.0f, (float)GetValue(VerticalGutterProperty));
 			set => SetValue(VerticalGutterProperty, value);
 		}
 

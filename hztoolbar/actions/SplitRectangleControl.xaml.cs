@@ -24,7 +24,7 @@ namespace hztoolbar.actions
 
         public int NumRows
         {
-            get => (int)GetValue(NumRowsProperty);
+            get => Math.Max(1, (int)GetValue(NumRowsProperty));
             set => SetValue(NumRowsProperty, value);
         }
 
@@ -33,7 +33,7 @@ namespace hztoolbar.actions
 
         public float RowGutter
         {
-            get => (float)GetValue(RowGutterProperty);
+            get => Math.Max(0.0f, (float)GetValue(RowGutterProperty));
             set => SetValue(RowGutterProperty, value);
         }
 
@@ -42,7 +42,7 @@ namespace hztoolbar.actions
 
         public int NumColumns
         {
-            get => (int)GetValue(NumColumnsProperty);
+            get => Math.Max(1, (int)GetValue(NumColumnsProperty));
             set => SetValue(NumColumnsProperty, value);
         }
 
@@ -51,7 +51,7 @@ namespace hztoolbar.actions
 
         public float ColumnGutter
         {
-            get => (float)GetValue(ColumnGutterProperty);
+            get => Math.Max(0.0f, (float)GetValue(ColumnGutterProperty));
             set => SetValue(ColumnGutterProperty, value);
         }
 

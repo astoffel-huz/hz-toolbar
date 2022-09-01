@@ -565,6 +565,15 @@ namespace hztoolbar {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Horizontal distribute between guides.
+        /// </summary>
+        public static string horizontal_resize_distribute_guide_label {
+            get {
+                return ResourceManager.GetString("horizontal_resize_distribute_guide_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal fit to guides.
         /// </summary>
         public static string horizontal_resize_guide_label {
@@ -750,6 +759,15 @@ namespace hztoolbar {
         public static string text_margin_small_label {
             get {
                 return ResourceManager.GetString("text_margin_small_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distribute between guides.
+        /// </summary>
+        public static string vertical_resize_distribute_guide_label {
+            get {
+                return ResourceManager.GetString("vertical_resize_distribute_guide_label", resourceCulture);
             }
         }
         

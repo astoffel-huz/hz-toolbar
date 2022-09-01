@@ -191,4 +191,92 @@ namespace hztoolbar.actions {
 		}
 	}
 
+	public class ResizeAndDistributeAction : AbstractGuideAction {
+		public const string HORIZONTAL = "horizontal";
+		public const string VERTICAL = "vertical";
+
+		public ResizeAndDistributeAction() : base("resize_distribute_guide") { }
+
+		private PowerPoint.PpGuideOrientation? GetOrientation(string arg) {
+			return arg switch {
+				HORIZONTAL => PowerPoint.PpGuideOrientation.ppVerticalGuide,
+				VERTICAL => PowerPoint.PpGuideOrientation.ppHorizontalGuide,
+				_ => null
+			};
+		}
+
+		private (PowerPoint.Guide First, PowerPoint.Guide Last)? FindGuides(string arg, List<PowerPoint.Shape> shapes) {
+			if (shapes.Count < 1) {
+				return null;
+			}
+			var guides = (
+				from guide in EnumerateGuides(GetOrientation(arg))
+				orderby guide.Position
+				select guide
+			   ).ToList();
+			if (guides.Count < 2) {
+				return null;
+			}
+			(float min, float max)? extrema = arg switch {
+				HORIZONTAL => (shapes.Min(it => it.Left), shapes.Max(it => it.Left + it.Width)),
+				VERTICAL => (shapes.Min(it => it.Top), shapes.Max(it => it.Top + it.Height)),
+				_ => null
+			};
+			if (extrema == null) { return null; }
+			var result = (
+				Utils.FloorItem(extrema.Value.min, guides, it => it.Position),
+				Utils.CeilingItem(extrema.Value.max, guides, it => it.Position)
+				);
+			if (result.Item1 == null) {
+				result.Item1 = guides[0];
+			}
+			if (result.Item2 == null) {
+				result.Item2 = guides[guides.Count - 1];
+			}
+			if (result.Item1.Position == result.Item2.Position) {
+				return null;
+			}
+			return (result.Item1, result.Item2);
+		}
+
+		private (string orientation, string gutter) SplitArg(string arg) {
+			return base.SplitArg(arg, ("", ""));
+		}
+
+		public override bool IsEnabled(string arg = "") {
+			var args = SplitArg(arg);
+			var shapes = GetSelectedShapes().ToList();
+			var guides = FindGuides(args.orientation, shapes);
+			var gutter = Utils.GetDefaultLength(args.gutter);
+			return guides != null && gutter != null && shapes.Count > 0;
+		}
+
+		public override bool Run(string arg = "") {
+			var args = SplitArg(arg);
+			var shapes = GetSelectedShapes().ToList();
+			var gutter = Utils.GetDefaultLength(args.gutter);
+			var guides = FindGuides(args.orientation, shapes);
+
+			if (guides != null && gutter != null && shapes.Count > 0) {
+				var low = guides.Value.First.Position;
+				var size = (guides.Value.Last.Position - low - gutter.Value * (shapes.Count - 1)) / shapes.Count;
+				if (args.orientation == HORIZONTAL) {
+					var left = low;
+					foreach (var shape in shapes.OrderBy(it => it.Left)) {
+						shape.Left = left;
+						shape.Width = size;
+						left += size + gutter.Value;
+					}
+				} else if (args.orientation == VERTICAL) {
+					var top = low;
+					foreach (var shape in shapes.OrderBy(it => it.Top)) {
+						shape.Top = top;
+						shape.Height = size;
+						top += size + gutter.Value;
+					}
+				}
+			}
+			return false;
+		}
+	}
 }

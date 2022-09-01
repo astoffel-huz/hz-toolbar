@@ -363,28 +363,6 @@
     <EmbeddedResource Include="icons\clear_text.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="icons\apply_background_accent1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_accent2_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_accent3_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_accent4_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_accent5_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_accent6_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_dark1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_dark2_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_light1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_background_light2_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent2_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent3_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent4_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent5_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_accent6_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_dark1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_dark2_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_light1_theme_color.png" />
-    <EmbeddedResource Include="icons\apply_line_light2_theme_color.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="icons\change_language_de.png" />
     <EmbeddedResource Include="icons\change_language_en.png" />
   </ItemGroup>
@@ -419,6 +397,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="icons\merge_text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\apply_background_theme_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\apply_line_theme_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icons\horizontal_resize_distribute_guide.png" />
+    <EmbeddedResource Include="icons\vertical_resize_distribute_guide.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

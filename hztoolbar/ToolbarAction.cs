@@ -104,6 +104,22 @@ namespace hztoolbar {
 			return Utils.GetResourceString($"{controlId}_supertip");
 		}
 
+		protected (string, string) SplitArg(string arg, (string, string) defaultValues) {
+			var result = arg.Split('+');
+			if (result.Length != 2) {
+				return defaultValues;
+			}
+			return (result[0], result[1]);
+		}
+
+		protected (string, string, string) SplitArg(string arg, (string, string, string) defaultValues) {
+			var result = arg.Split('+');
+			if (result.Length != 3) {
+				return defaultValues;
+			}
+			return (result[0], result[1], result[2]);
+		}
+
 		/// <summary>
 		/// Indicates whether this action is enabled.
 		/// </summary>

@@ -285,6 +285,9 @@
   <data name="harmonize_shape_width_label" xml:space="preserve">
     <value>Same Width</value>
   </data>
+  <data name="horizontal_resize_distribute_guide_label" xml:space="preserve">
+    <value>Horizontal distribute between guides</value>
+  </data>
   <data name="horizontal_resize_guide_label" xml:space="preserve">
     <value>Horizontal fit to guides</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="text_margin_small_label" xml:space="preserve">
     <value>Small margins</value>
+  </data>
+  <data name="vertical_resize_distribute_guide_label" xml:space="preserve">
+    <value>Vertical distribute between guides</value>
   </data>
   <data name="vertical_resize_guide_label" xml:space="preserve">
     <value>Vertical fit to guides</value>

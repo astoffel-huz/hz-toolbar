@@ -30,10 +30,10 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <components:LengthInputControl x:Name="leftMarginInput" Value="{Binding ElementName=_this, Path=LeftMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1"/>
-        <components:LengthInputControl x:Name="topMarginInput"  Value="{Binding ElementName=_this, Path=TopMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1"/>
-        <components:LengthInputControl x:Name="rightMarginInput"  Value="{Binding ElementName=_this, Path=RightMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2"/>
-        <components:LengthInputControl x:Name="bottomMarginInput"  Value="{Binding ElementName=_this, Path=BottomMargin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+        <components:LengthInputControl x:Name="leftMarginInput" Value="{Binding ElementName=_this, Path=LeftMargin, Mode=TwoWay}" Minimum="0" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1"/>
+        <components:LengthInputControl x:Name="topMarginInput"  Value="{Binding ElementName=_this, Path=TopMargin, Mode=TwoWay}"  Minimum="0" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Column="1"/>
+        <components:LengthInputControl x:Name="rightMarginInput"  Value="{Binding ElementName=_this, Path=RightMargin, Mode=TwoWay}"  Minimum="0" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2"/>
+        <components:LengthInputControl x:Name="bottomMarginInput"  Value="{Binding ElementName=_this, Path=BottomMargin, Mode=TwoWay}"  Minimum="0" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
         <Grid Grid.Row="3" Margin="2,2,2,2" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

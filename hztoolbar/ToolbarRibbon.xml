@@ -81,6 +81,10 @@
 
 					<button id="horizontal_resize_guide" tag="resize_guide:horizontal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
 					<button id="vertical_resize_guide" tag="resize_guide:vertical" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+
+					<button id="horizontal_resize_distribute_guide" tag="resize_distribute_guide:horizontal+normal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+					<button id="vertical_resize_distribute_guide" tag="resize_distribute_guide:vertical+normal" getLabel="GetLabel" onAction="OnAction" getEnabled="IsEnabled" getImage="GetImage" getSupertip="GetSupertip" size="large" />
+
 				</group>
 
 				<group id="color_actions" getLabel="GetLabel" autoScale="true">

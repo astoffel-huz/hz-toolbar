@@ -33,7 +33,7 @@
         <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_gutter_label}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,2,2" />
         <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_rows_label}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2,2,2,2"  />
         <hc:SimpleText Text="{x:Static p:Strings.split_rectangle_dialog_columns_label}" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Right" />
-        <components:LengthInputControl 
+        <hc:NumericUpDown 
             x:Name="numRowsInput" 
             Value="{Binding Path=NumRows, Mode=TwoWay}"
             Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
@@ -43,7 +43,7 @@
             x:Name="rowGutterInput" 
             Value="{Binding Path=RowGutter, Mode=TwoWay}" 
             Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="2,2,2,2" Minimum="0" TabIndex="3"/>
-        <components:LengthInputControl
+        <hc:NumericUpDown
             x:Name="numColumnsInput" 
             Value="{Binding Path=NumColumns, Mode=TwoWay}" 
             Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="2,2,2,2" Minimum="1" TabIndex="2"/>

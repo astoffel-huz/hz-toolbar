@@ -17,8 +17,8 @@ namespace hztoolbar.controls {
 	public partial class LengthInputControl : UserControl {
 
 		public float Value {
-			get { return (float)GetValue(ValueProperty); }
-			set { SetValue(ValueProperty, value); }
+			get { return Math.Max((float)Minimum, (float)GetValue(ValueProperty)); }
+			set { SetValue(ValueProperty, Math.Max(Minimum, value)); }
 		}
 
 		public static readonly DependencyProperty ValueProperty =

@@ -14,7 +14,8 @@ namespace hztoolbar.actions
             return GetSelectedShapes().Take(2).Count() == 2;
         }
     }
-    public class HarmonizeShapeWidthAction : AbstractShapeSizeAction
+    
+	public class HarmonizeShapeWidthAction : AbstractShapeSizeAction
     {
 
         public HarmonizeShapeWidthAction() : base("harmonize_shape_width") { }
@@ -38,7 +39,6 @@ namespace hztoolbar.actions
         }
 
     }
-
 
     public class HarmonizeShapeHeightAction : AbstractShapeSizeAction
     {
@@ -64,7 +64,8 @@ namespace hztoolbar.actions
         }
 
     }
-    public class HarmonizeShapeSizeAction : AbstractShapeSizeAction
+    
+	public class HarmonizeShapeSizeAction : AbstractShapeSizeAction
     {
 
         public HarmonizeShapeSizeAction() : base("harmonize_shape_size") { }
