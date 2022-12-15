@@ -7,9 +7,10 @@ using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.RightsManagement;
+using System;
 
 namespace hztoolbar.actions {
-
 
 	public abstract class AbstractThemeColorAction : ToolbarAction {
 		private const string DARK1 = "dark1";
@@ -28,31 +29,12 @@ namespace hztoolbar.actions {
 		protected override IEnumerable<PowerPoint.Shape> GetSelectedShapes() {
 			return from shape in base.GetSelectedShapes()
 				   where shape.Type == Office.MsoShapeType.msoAutoShape
+					|| shape.Type == Office.MsoShapeType.msoTextBox
+					|| shape.Type == Office.MsoShapeType.msoPlaceholder
 				   select shape;
 		}
 
-		private Bitmap UpdateIcon(Bitmap image, string arg = "") {
-			var color = GetColor(arg);
-			if (color != null) {
-				return Utils.ReplaceBitmapColor(image, Color.FromArgb(ColorTranslator.ToWin32(Color.FromArgb(color.Value))));
-			}
-			return image;
-		}
-
-		public override Bitmap? GetImage(string controlId, string arg = "") {
-			var result = base.GetImage(controlId, arg);
-			if (result != null) {
-				result = UpdateIcon(result, arg);
-			}
-			return result;
-		}
-
-		public override bool IsEnabled(string arg = "") {
-			var shapes = GetSelectedShapes();
-			return shapes.Take(1).Count() > 0;
-		}
-
-		protected int? GetColor(string arg) {
+		protected Color? GetColor(string arg) {
 			var slide = Utils.GetActiveSlide();
 			if (slide == null) {
 				return null;
@@ -81,8 +63,15 @@ namespace hztoolbar.actions {
 				return null;
 			}
 
-			return themeColors.Colors(themeColorIndex.Value).RGB;
+			var result = themeColors.Colors(themeColorIndex.Value).RGB;
+			return ColorTranslator.FromOle(result);
 		}
+
+		public override bool IsEnabled(string arg = "") {
+			var shapes = GetSelectedShapes();
+			return shapes.Take(1).Count() > 0 && GetColor(arg) != null;
+		}
+
 
 	}
 
@@ -91,22 +80,38 @@ namespace hztoolbar.actions {
 
 		public ApplyBackgroundThemeColorAction() : base("apply_background_theme_color") { }
 
+		private Color GetTextColor(Color color) {
+			return color.GetBrightness() > Math.Sqrt(0.5) ? Color.Black : Color.White;
+		}
+
+		public override Bitmap? GetImage(string controlId, string arg = "") {
+			var result = base.GetImage(this.Id);
+			var color = GetColor(arg);
+			if (result != null && color != null) {
+				result = Utils.ReplaceBitmapColor(
+					result,
+					new Dictionary<Color, Color>() {
+						[Color.Red] = GetTextColor(color.Value)
+					},
+					color.Value
+				);
+			}
+			return result;
+		}
+
+
 		public override bool Run(string arg = "") {
 			var shapes = GetSelectedShapes();
 			var color = GetColor(arg);
 
 			if (color != null) {
-				var textColor = Color.FromArgb(color.Value).GetBrightness() > 0.7
-					? Color.Black.ToArgb()
-					: Color.White.ToArgb();
-
 				foreach (var shape in shapes) {
-					shape.Fill.Solid();
-					shape.Fill.BackColor.RGB = color.Value;
-					shape.Fill.ForeColor.RGB = color.Value;
-
 					if (shape.HasTextFrame == Office.MsoTriState.msoTrue || shape.HasTextFrame == Office.MsoTriState.msoCTrue) {
-						shape.TextFrame.TextRange.Font.Color.RGB = textColor;
+						// TODO: validate whether it is true that only shapes with text frames can be filled
+						shape.Fill.Solid();
+						shape.Fill.BackColor.RGB = ColorTranslator.ToOle(color.Value);
+						shape.Fill.ForeColor.RGB = ColorTranslator.ToOle(color.Value);
+						shape.TextFrame.TextRange.Font.Color.RGB = ColorTranslator.ToOle(GetTextColor(color.Value));
 					}
 
 				}
@@ -115,9 +120,25 @@ namespace hztoolbar.actions {
 		}
 	}
 
-	public class ApplyStrokeThemeColorAction : AbstractThemeColorAction {
+	public class ApplyLineThemeColorAction : AbstractThemeColorAction {
 
-		public ApplyStrokeThemeColorAction() : base("apply_line_theme_color") { }
+		public ApplyLineThemeColorAction() : base("apply_line_theme_color") { }
+
+		public override Bitmap? GetImage(string controlId, string arg = "") {
+			var result = base.GetImage(this.Id);
+			var color = GetColor(arg);
+			if (result != null && color != null) {
+				result = Utils.ReplaceBitmapColor(
+					result,
+					new Dictionary<Color, Color>() {
+						[Color.Red] = Color.LightGray,
+						[Color.FromArgb(255, 0, 255, 0)] = Color.DarkGray
+					},
+					color.Value
+				);
+			}
+			return result;
+		}
 
 		public override bool Run(string arg = "") {
 			var shapes = GetSelectedShapes();
@@ -127,15 +148,14 @@ namespace hztoolbar.actions {
 				foreach (var shape in shapes) {
 					if (shape.Line.Style == Office.MsoLineStyle.msoLineStyleMixed) {
 						shape.Line.Style = Office.MsoLineStyle.msoLineSingle;
+						shape.Line.Weight = 3.6f;
 					}
 					if (shape.Line.DashStyle == Office.MsoLineDashStyle.msoLineDashStyleMixed) {
 						shape.Line.DashStyle = Office.MsoLineDashStyle.msoLineSolid;
+						shape.Line.Weight = 3.6f;
 					}
-					Debug.WriteLine(shape.Line.Style);
-					Debug.WriteLine(shape.Line.DashStyle);
-					shape.Line.BackColor.RGB = color.Value;
-					shape.Line.ForeColor.RGB = color.Value;
-
+					shape.Line.BackColor.RGB = ColorTranslator.ToOle(color.Value);
+					shape.Line.ForeColor.RGB = ColorTranslator.ToOle(color.Value);
 				}
 			}
 			return false;

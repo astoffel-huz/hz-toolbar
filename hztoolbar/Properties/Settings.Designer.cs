@@ -12,7 +12,7 @@ namespace hztoolbar.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,9 +26,9 @@ namespace hztoolbar.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int arrange_horizontal_gutter {
+        public float arrange_horizontal_gutter {
             get {
-                return ((int)(this["arrange_horizontal_gutter"]));
+                return ((float)(this["arrange_horizontal_gutter"]));
             }
             set {
                 this["arrange_horizontal_gutter"] = value;
@@ -38,9 +38,9 @@ namespace hztoolbar.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int arrange_vertical_gutter {
+        public float arrange_vertical_gutter {
             get {
-                return ((int)(this["arrange_vertical_gutter"]));
+                return ((float)(this["arrange_vertical_gutter"]));
             }
             set {
                 this["arrange_vertical_gutter"] = value;
@@ -85,7 +85,7 @@ namespace hztoolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.6")]
         public float textbox_margin_top {
             get {
                 return ((float)(this["textbox_margin_top"]));
@@ -97,7 +97,7 @@ namespace hztoolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("7.2")]
         public float textbox_margin_left {
             get {
                 return ((float)(this["textbox_margin_left"]));
@@ -109,7 +109,7 @@ namespace hztoolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.6")]
         public float textbox_margin_bottom {
             get {
                 return ((float)(this["textbox_margin_bottom"]));
@@ -121,13 +121,49 @@ namespace hztoolbar.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("7.2")]
         public float textbox_margin_right {
             get {
                 return ((float)(this["textbox_margin_right"]));
             }
             set {
                 this["textbox_margin_right"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.8")]
+        public float default_small_length {
+            get {
+                return ((float)(this["default_small_length"]));
+            }
+            set {
+                this["default_small_length"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.6")]
+        public float default_normal_length {
+            get {
+                return ((float)(this["default_normal_length"]));
+            }
+            set {
+                this["default_normal_length"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7.2")]
+        public float default_large_length {
+            get {
+                return ((float)(this["default_large_length"]));
+            }
+            set {
+                this["default_large_length"] = value;
             }
         }
     }

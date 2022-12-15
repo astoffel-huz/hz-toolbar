@@ -7,6 +7,7 @@
              xmlns:p="clr-namespace:hztoolbar"
              xmlns:local="clr-namespace:hztoolbar.actions"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:components="clr-namespace:hztoolbar.controls"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -22,18 +23,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <hc:OutlineText Text="{x:Static p:Strings.arrange_shape_settings_dialog_gutter_label}" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Margin="2,0,2,2"/>
-        <hc:OutlineText Text="{x:Static p:Strings.arrange_shape_settings_dialog_resize_label}" HorizontalAlignment="Center" Grid.Column="3" VerticalAlignment="Center" Margin="2,0,2,2"/>
-        <hc:OutlineText Text="{x:Static p:Strings.arrange_shape_settings_dialog_horizontal_label}" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Center" Margin="0,2,2,2"/>
-        <hc:OutlineText Text="{x:Static p:Strings.arrange_shape_settings_dialog_vertical_label}" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Margin="0,2,2,2"/>
-        <hc:NumericUpDown x:Name="horizontalGutterInput" Value="{Binding Source={x:Static properties:Settings.Default}, Path=arrange_horizontal_gutter, Mode=TwoWay}" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="2,2,2,2"  ValueChanged="OnValueChangeHandler"/>
-        <hc:NumericUpDown x:Name="verticalGutterInput" Value="{Binding Source={x:Static properties:Settings.Default},Path=arrange_vertical_gutter, Mode=TwoWay}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Stretch" ValueChanged="OnValueChangeHandler" />
+        <hc:SimpleText Text="{x:Static p:Strings.arrange_shape_settings_dialog_gutter_label}" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Margin="2,0,2,2"/>
+        <hc:SimpleText Text="{x:Static p:Strings.arrange_shape_settings_dialog_resize_label}" HorizontalAlignment="Center" Grid.Column="3" VerticalAlignment="Center" Margin="2,0,2,2"/>
+        <hc:SimpleText Text="{x:Static p:Strings.arrange_shape_settings_dialog_horizontal_label}" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Center" Margin="0,2,2,2"/>
+        <hc:SimpleText Text="{x:Static p:Strings.arrange_shape_settings_dialog_vertical_label}" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Margin="0,2,2,2"/>
+        <components:LengthInputControl x:Name="horizontalGutterInput" Value="{Binding Source={x:Static properties:Settings.Default}, Path=arrange_horizontal_gutter, Mode=TwoWay}" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="2,2,2,2"  />
+        <components:LengthInputControl x:Name="verticalGutterInput" Value="{Binding Source={x:Static properties:Settings.Default},Path=arrange_vertical_gutter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="2,2,2,2" HorizontalAlignment="Stretch"  />
         <ToggleButton x:Name="horizontalResizeInput" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=arrange_grid_resize_horizontal, Mode=TwoWay}" Style="{StaticResource ToggleButtonSwitch}" Grid.Row="1" Grid.Column="2" Margin="2,2,0,2"/>
         <ToggleButton x:Name="verticalResizeInput" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=arrange_grid_resize_vertical, Mode=TwoWay}" Style="{StaticResource ToggleButtonSwitch}" Grid.Row="2" Grid.Column="2" Margin="2,2,0,2"/>
         <Grid Grid.ColumnSpan="3" Grid.Row="3" Margin="0,2,0,0">
@@ -45,5 +47,6 @@
             <Button x:Name="cancelButton" Content="{x:Static p:Strings.arrange_shape_settings_dialog_cancel_label}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Margin="2,0,2,0" IsCancel="True" Style="{DynamicResource ButtonWarning}"/>
             <Button x:Name="okButton" Grid.Column="2" Content="{x:Static p:Strings.arrange_shape_settings_dialog_ok_label}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="2,0,0,0" IsDefault="True" Click="OnOkClickHandler" Style="{DynamicResource ButtonPrimary}"/>
         </Grid>
+        <hc:SimpleText Grid.ColumnSpan="3" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Text="by H&amp;Z Solutions" Margin="0,4,0,0" FontSize="8"/>
     </Grid>
 </UserControl>

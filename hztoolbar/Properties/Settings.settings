@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="hztoolbar.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="arrange_horizontal_gutter" Type="System.Int32" Scope="User">
+    <Setting Name="arrange_horizontal_gutter" Type="System.Single" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="arrange_vertical_gutter" Type="System.Int32" Scope="User">
+    <Setting Name="arrange_vertical_gutter" Type="System.Single" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="change_shape_type" Type="System.String" Scope="User">
@@ -18,16 +18,25 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="textbox_margin_top" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3.6</Value>
     </Setting>
     <Setting Name="textbox_margin_left" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">7.2</Value>
     </Setting>
     <Setting Name="textbox_margin_bottom" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3.6</Value>
     </Setting>
     <Setting Name="textbox_margin_right" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">7.2</Value>
+    </Setting>
+    <Setting Name="default_small_length" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.8</Value>
+    </Setting>
+    <Setting Name="default_normal_length" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">3.6</Value>
+    </Setting>
+    <Setting Name="default_large_length" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">7.2</Value>
     </Setting>
   </Settings>
 </SettingsFile>
