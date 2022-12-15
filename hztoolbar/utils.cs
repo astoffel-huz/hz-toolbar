@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using HandyControl.Data;
 using hztoolbar.Properties;
 using Microsoft.Office.Core;
 using System;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Markup;
 using Office = Microsoft.Office.Core;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 
@@ -31,77 +29,118 @@ namespace hztoolbar {
 			Small, Normal, Large
 		}
 
+		public static bool IsTrue(Office.MsoTriState x) {
+			return x == MsoTriState.msoTrue || x == MsoTriState.msoCTrue;
+		}
+
 
 		#region BulletFormat2
-		public class BulletFormatSnapshot {
+		public abstract class BulletFormatSnapshot {
+			public abstract void Apply(Office.BulletFormat2 to);
+		}
+
+		public class UnnumberedBulletFormatSnapshot : BulletFormatSnapshot {
 			public readonly int Character;
 			public readonly float RelativeSize;
-			public readonly int StartValue;
-			public readonly string FontName;
-			public readonly float FontSize;
-			public readonly Office.MsoNumberedBulletStyle Style;
-			public readonly Office.MsoBulletType Type;
+			public readonly FontSnapshot Font;
+			public readonly Office.MsoTriState UseTextColor;
+			public readonly Office.MsoTriState UseTextFont;
+			public readonly Office.MsoTriState Visible;
 
-			public BulletFormatSnapshot(int character, float relativeSize, int startValue, string fontName, float fontSize,
-				Office.MsoNumberedBulletStyle style, Office.MsoBulletType type) {
+			public UnnumberedBulletFormatSnapshot(int character, float relativeSize, FontSnapshot font, MsoTriState useTextColor, MsoTriState useTextFont, MsoTriState visible) {
 				this.Character = character;
 				this.RelativeSize = relativeSize;
-				this.StartValue = startValue;
-				this.FontName = fontName;
-				this.FontSize = fontSize;
-				this.Style = style;
-				this.Type = type;
+				this.Font = font;
+				this.UseTextColor = useTextColor;
+				this.UseTextFont = useTextFont;
+				this.UseTextColor = useTextColor;
+				this.UseTextFont = useTextFont;
+				this.Visible = visible;
+			}
+
+			public override void Apply(Office.BulletFormat2 to) {
+				to.UseTextFont = this.UseTextFont;
+				Utils.Apply(to.Font, this.Font);
+				to.Character = this.Character;
+				to.RelativeSize = this.RelativeSize;
+				to.UseTextColor = this.UseTextColor;
+				to.UseTextColor = this.UseTextColor;
+				to.Visible = this.Visible;
+				Debug.Assert(to.Type == MsoBulletType.msoBulletUnnumbered);
 			}
 		}
 
-		public static BulletFormatSnapshot Capture(Office.BulletFormat2 format) {
-			return new BulletFormatSnapshot(
-				format.Character,
-				format.RelativeSize,
-				format.StartValue,
-				format.Font.Name,
-				format.Font.Size,
-				format.Style,
-				format.Type
-				);
+		public class NumberedBulletFormatSnapshot : BulletFormatSnapshot {
+			public readonly int StartValue;
+			public readonly Office.MsoNumberedBulletStyle Style;
+			public readonly float RelativeSize;
+			public readonly FontSnapshot Font;
+			public readonly Office.MsoTriState UseTextColor;
+			public readonly Office.MsoTriState UseTextFont;
+			public readonly Office.MsoTriState Visible;
+
+			public NumberedBulletFormatSnapshot(int startValue, Office.MsoNumberedBulletStyle style, float relativeSize, FontSnapshot font, MsoTriState useTextColor, MsoTriState useTextFont, MsoTriState visible) {
+				this.StartValue = startValue;
+				this.Style = style;
+				this.RelativeSize = relativeSize;
+				this.Font = font;
+				this.UseTextColor = useTextColor;
+				this.UseTextFont = useTextFont;
+				this.UseTextColor = useTextColor;
+				this.UseTextFont = useTextFont;
+				this.Visible = visible;
+			}
+			public override void Apply(Office.BulletFormat2 to) {
+				to.UseTextFont = this.UseTextFont;
+				Utils.Apply(to.Font, this.Font);
+				to.Style = this.Style;
+				to.StartValue = this.StartValue;
+				to.RelativeSize = this.RelativeSize;
+				to.UseTextColor = this.UseTextColor;
+				to.Visible = this.Visible;
+				Debug.Assert(to.Type == MsoBulletType.msoBulletNumbered);
+			}
 		}
 
-		public static void Apply(Office.BulletFormat2 to, BulletFormatSnapshot snapshot) {
-			to.Character = snapshot.Character;
-			to.RelativeSize = snapshot.RelativeSize;
-			to.StartValue = snapshot.StartValue;
-			to.Font.Name = snapshot.FontName;
-			to.Font.Size = snapshot.FontSize;
-			to.Style = snapshot.Style;
-			switch (snapshot.Type) {
-				case MsoBulletType.msoBulletNone:
-				case MsoBulletType.msoBulletUnnumbered:
-				case MsoBulletType.msoBulletNumbered:
-					to.Type = snapshot.Type;
-					break;
-				default:
-					to.Type = MsoBulletType.msoBulletUnnumbered;
-					break;
+		public class NoneBulletFormatSnapshot : BulletFormatSnapshot {
+			public override void Apply(Office.BulletFormat2 to) {
+				to.Type = MsoBulletType.msoBulletNone;
+				Debug.Assert(to.Type == MsoBulletType.msoBulletNone);
+			}
+		}
+
+		public static BulletFormatSnapshot? Capture(Office.BulletFormat2 format) {
+			return format.Type switch {
+				MsoBulletType.msoBulletUnnumbered => new UnnumberedBulletFormatSnapshot(
+										format.Character,
+										format.RelativeSize,
+										Capture(format.Font),
+										format.UseTextColor,
+										format.UseTextFont,
+										format.Visible
+										),
+				MsoBulletType.msoBulletNumbered => new NumberedBulletFormatSnapshot(
+										format.StartValue,
+										format.Style,
+										format.RelativeSize,
+										Capture(format.Font),
+										format.UseTextColor,
+										format.UseTextFont,
+										format.Visible
+										),
+				MsoBulletType.msoBulletNone => new NoneBulletFormatSnapshot(),
+				_ => null,
+			};
+		}
+
+		public static void Apply(Office.BulletFormat2 to, BulletFormatSnapshot? snapshot) {
+			if (snapshot != null) {
+				snapshot.Apply(to);
 			}
 		}
 
 		public static void Copy(Office.BulletFormat2 to, Office.BulletFormat2 from) {
-			to.Character = from.Character;
-			to.RelativeSize = from.RelativeSize;
-			to.StartValue = from.StartValue;
-			to.Font.Name = from.Font.Name;
-			to.Font.Size = from.Font.Size;
-			to.Style = from.Style;
-			switch (from.Type) {
-				case MsoBulletType.msoBulletNone:
-				case MsoBulletType.msoBulletUnnumbered:
-				case MsoBulletType.msoBulletNumbered:
-					to.Type = from.Type;
-					break;
-				default:
-					to.Type = MsoBulletType.msoBulletUnnumbered;
-					break;
-			}
+			Apply(to, Capture(from));
 		}
 
 		#endregion
@@ -158,17 +197,7 @@ namespace hztoolbar {
 		}
 
 		public static void Copy(Office.TabStops2 to, Office.TabStops2 from) {
-			Clear(to);
-			foreach (Office.TabStop2 tabStop in from) {
-				switch (tabStop.Type) {
-					case Office.MsoTabStopType.msoTabStopLeft:
-					case Office.MsoTabStopType.msoTabStopCenter:
-					case Office.MsoTabStopType.msoTabStopRight:
-					case Office.MsoTabStopType.msoTabStopDecimal:
-						to.Add(tabStop.Type, tabStop.Position);
-						break;
-				};
-			}
+			Apply(to, Capture(from));
 		}
 		#endregion
 
@@ -180,22 +209,22 @@ namespace hztoolbar {
 		public class ParagraphFormatSnapshot {
 			public readonly Office.MsoParagraphAlignment Alignment;
 			public readonly Office.MsoBaselineAlignment BaselineAlignment;
-			public readonly BulletFormatSnapshot Bullet;
+			public readonly BulletFormatSnapshot? Bullet;
 			public readonly float FirstLineIndent;
 			public readonly Office.MsoTriState HangingPunctuation;
-			public readonly int IndentLevel;
 			public readonly float LeftIndent;
 			public readonly TabStopsSnapshot TabStops;
 
-			public ParagraphFormatSnapshot(Office.MsoParagraphAlignment alignment, Office.MsoBaselineAlignment baselineAlignment,
-				BulletFormatSnapshot bullet, float firstLineIndent, Office.MsoTriState hangingPunctuation, int indentLevel, float leftIndent,
-				TabStopsSnapshot tabStops) {
+			public ParagraphFormatSnapshot(
+				Office.MsoParagraphAlignment alignment, Office.MsoBaselineAlignment baselineAlignment,
+				BulletFormatSnapshot? bullet, float firstLineIndent, Office.MsoTriState hangingPunctuation, float leftIndent,
+				TabStopsSnapshot tabStops
+			) {
 				this.Alignment = alignment;
 				this.BaselineAlignment = baselineAlignment;
 				this.Bullet = bullet;
 				this.FirstLineIndent = firstLineIndent;
 				this.HangingPunctuation = hangingPunctuation;
-				this.IndentLevel = indentLevel;
 				this.LeftIndent = leftIndent;
 				this.TabStops = tabStops;
 			}
@@ -213,7 +242,6 @@ namespace hztoolbar {
 				Capture(format.Bullet),
 				format.FirstLineIndent,
 				format.HangingPunctuation,
-				format.IndentLevel,
 				format.LeftIndent,
 				Capture(format.TabStops)
 				);
@@ -228,10 +256,13 @@ namespace hztoolbar {
 			to.Alignment = snapshot.Alignment;
 			to.BaselineAlignment = snapshot.BaselineAlignment;
 			Apply(to.Bullet, snapshot.Bullet);
-			to.FirstLineIndent = snapshot.FirstLineIndent;
+			try {
+				to.FirstLineIndent = snapshot.FirstLineIndent;
+			} catch { }
 			to.HangingPunctuation = snapshot.HangingPunctuation;
-			to.IndentLevel = snapshot.IndentLevel;
-			to.LeftIndent = snapshot.LeftIndent;
+			try {
+				to.LeftIndent = snapshot.LeftIndent;
+			} catch { }
 			Apply(to.TabStops, snapshot.TabStops);
 		}
 
@@ -241,81 +272,210 @@ namespace hztoolbar {
 		/// <param name="to">the target paragraph format</param>
 		/// <param name="from">the source paragraph format to copy</param>
 		public static void Copy(Office.ParagraphFormat2 to, Office.ParagraphFormat2 from) {
-			to.Alignment = from.Alignment;
-			to.BaselineAlignment = from.BaselineAlignment;
-			Copy(to.Bullet, from.Bullet);
-			to.FirstLineIndent = from.FirstLineIndent;
-			to.HangingPunctuation = from.HangingPunctuation;
-			to.IndentLevel = from.IndentLevel;
-			to.LeftIndent = from.LeftIndent;
-			Copy(to.TabStops, from.TabStops);
-
+			Apply(to, Capture(from));
 		}
 		#endregion
 
-		#region Font2
-		public class FontEmphasisSnapshot {
-			public readonly Office.MsoTriState Bold;
-			public readonly Office.MsoTriState Italic;
-			public readonly Office.MsoTextStrike Strike;
-			public readonly Office.MsoTextUnderlineType UnderlineStyle;
-			public readonly Office.MsoTriState DoubleStrikeThrough;
-			public readonly Office.MsoTriState Subscript;
-			public readonly Office.MsoTriState Superscript;
-			public readonly string Name;
-			public readonly float Size;
+		#region ColorFormat
+		public abstract class ColorFormatSnapshot {
+			public readonly float TintAndShade;
 
-			public FontEmphasisSnapshot(Office.MsoTriState bold, Office.MsoTriState italic, Office.MsoTextStrike strike,
-				Office.MsoTextUnderlineType underlineStyle, Office.MsoTriState doubleStrikeThrough, Office.MsoTriState subscript, Office.MsoTriState superscript,
-				string name, float size) {
-				this.Bold = bold;
-				this.Italic = italic;
-				this.Strike = strike;
-				this.UnderlineStyle = underlineStyle;
-				this.DoubleStrikeThrough = doubleStrikeThrough;
-				this.Subscript = subscript;
-				this.Superscript = superscript;
-				this.Name = name;
-				this.Size = size;
+			public ColorFormatSnapshot(float tintAndShade) {
+				this.TintAndShade = tintAndShade;
+			}
+
+			public abstract void Apply(Office.ColorFormat to);
+		}
+
+		public class RgbColorFormatSnapshot : ColorFormatSnapshot {
+			public readonly int RGB;
+
+			public RgbColorFormatSnapshot(int rgb, float tintAndShade) : base(tintAndShade) {
+				this.RGB = rgb;
+			}
+
+			public override void Apply(ColorFormat to) {
+				to.RGB = this.RGB;
+				to.TintAndShade = this.TintAndShade;
+				Debug.Assert(to.Type == MsoColorType.msoColorTypeRGB);
 			}
 		}
 
-		public static FontEmphasisSnapshot Capture(Office.Font2 font) {
-			return new FontEmphasisSnapshot(
-				font.Bold,
-				font.Italic,
-				font.Strike,
-				font.UnderlineStyle,
-				font.DoubleStrikeThrough,
-				font.Subscript,
-				font.Superscript,
-				font.Name,
-				font.Size
+		public class SchemeColorFormatSnapshot : ColorFormatSnapshot {
+			public readonly Office.MsoThemeColorIndex ObjectThemeColor;
+
+			public SchemeColorFormatSnapshot( Office.MsoThemeColorIndex objectThemeColor, float tintAndShade) : base(tintAndShade) {
+				this.ObjectThemeColor = objectThemeColor;
+			}
+
+			public override void Apply(Office.ColorFormat to) {
+				to.ObjectThemeColor = this.ObjectThemeColor;
+				to.TintAndShade = this.TintAndShade;
+				Debug.Assert(to.Type == MsoColorType.msoColorTypeScheme);
+			}
+		}
+
+		public static ColorFormatSnapshot? Capture(Office.ColorFormat from) {
+			return from.Type switch {
+				MsoColorType.msoColorTypeRGB => new RgbColorFormatSnapshot(from.RGB, from.TintAndShade),
+				MsoColorType.msoColorTypeScheme => new SchemeColorFormatSnapshot(from.ObjectThemeColor, from.TintAndShade),
+				_ => null,
+			};
+		}
+
+		public static void Apply(Office.ColorFormat to, ColorFormatSnapshot? snapshot) {
+			if (snapshot != null) {
+				snapshot.Apply(to);
+			}
+		}
+
+		public static void Copy(Office.ColorFormat to, Office.ColorFormat from) {
+			Apply(to, Capture(from));
+		}
+
+		#endregion
+
+		#region FillFormat
+
+		public abstract class FillFormatSnapshot {
+
+			public FillFormatSnapshot() { }
+
+			public abstract void Apply(Office.FillFormat to);
+		}
+
+		public class SolidFillFormatSnapshot : FillFormatSnapshot {
+			public readonly ColorFormatSnapshot? ForeColor;
+			public readonly ColorFormatSnapshot? BackColor;
+
+			public SolidFillFormatSnapshot(ColorFormatSnapshot? foreColor, ColorFormatSnapshot? backColor) {
+				this.ForeColor = foreColor;
+				this.BackColor = backColor;
+			}
+
+			public override void Apply(FillFormat to) {
+				Utils.Apply(to.BackColor, this.BackColor);
+				Utils.Apply(to.ForeColor, this.ForeColor);
+				Debug.Assert(to.Type == Office.MsoFillType.msoFillSolid);
+			}
+		}
+
+		public static FillFormatSnapshot? Capture(Office.FillFormat from) {
+			return from.Type switch {
+				Office.MsoFillType.msoFillSolid => new SolidFillFormatSnapshot(Capture(from.ForeColor), Capture(from.BackColor)),
+				_ => null,
+			};
+		}
+
+		public static void Apply(Office.FillFormat to, FillFormatSnapshot? snapshot) {
+			if (snapshot != null) {
+				snapshot.Apply(to);
+			}
+		}
+
+		public static void Copy(Office.FillFormat to, Office.FillFormat from) {
+			Apply(to, Capture(from));
+		}
+
+		#endregion
+
+		#region Font2
+		public class FontSnapshot {
+			public readonly Office.MsoTriState Allcaps;
+			public readonly float BaselineOffset;
+			public readonly Office.MsoTriState Bold;
+			public readonly Office.MsoTextCaps Caps;
+			public readonly Office.MsoTriState DoubleStrikeThrough;
+			public readonly Office.MsoTriState Equalize;
+			public readonly FillFormatSnapshot? Fill;
+			public readonly ColorFormatSnapshot? Highlight;
+			public readonly Office.MsoTriState Italic;
+			public readonly float Kerning;
+			public readonly string Name;
+			public readonly float Size;
+			public readonly Office.MsoTriState Smallcaps;
+			public readonly Office.MsoSoftEdgeType SoftEdgeFormat;
+			public readonly float Spacing;
+			public readonly Office.MsoTextStrike Strike;
+			public readonly Office.MsoTriState StrikeThrough;
+			public readonly Office.MsoTriState Subscript;
+			public readonly Office.MsoTriState Superscript;
+			public readonly Office.MsoTextUnderlineType UnderlineStyle;
+			public readonly Office.MsoPresetTextEffect WordArtformat;
+			// TODO highlight
+
+			public FontSnapshot(
+				string name, float size, Office.MsoTriState allcaps, float baselineOffset,
+				Office.MsoTriState bold, Office.MsoTextCaps caps, Office.MsoTriState doubleStrikeThrough,
+				Office.MsoTriState equalize, FillFormatSnapshot? fill, ColorFormatSnapshot? highlight,
+				Office.MsoTriState italic, float kerning,
+				Office.MsoTriState smallcaps, Office.MsoSoftEdgeType softEdgeFormat, float spacing,
+				Office.MsoTextStrike strike, Office.MsoTriState strikeThrough, Office.MsoTriState subscript,
+				Office.MsoTriState superscript, Office.MsoTextUnderlineType underlineStyle,
+				Office.MsoPresetTextEffect wordArtformat
+				) {
+				this.Name = name;
+				this.Size = size;
+				this.Allcaps = allcaps;
+				this.BaselineOffset = baselineOffset;
+				this.Bold = bold;
+				this.Caps = caps;
+				this.DoubleStrikeThrough = doubleStrikeThrough;
+				this.Equalize = equalize;
+				this.Fill = fill;
+				this.Highlight = highlight;
+				this.Italic = italic;
+				this.Kerning = kerning;
+				this.Smallcaps = smallcaps;
+				this.SoftEdgeFormat = softEdgeFormat;
+				this.Spacing = spacing;
+				this.Strike = strike;
+				this.StrikeThrough = strikeThrough;
+				this.Subscript = subscript;
+				this.Superscript = superscript;
+				this.UnderlineStyle = underlineStyle;
+				this.WordArtformat = wordArtformat;
+			}
+		}
+
+		public static FontSnapshot Capture(Office.Font2 font) {
+		return new FontSnapshot(
+				font.Name, font.Size, font.Allcaps, font.BaselineOffset,
+				font.Bold, font.Caps, font.DoubleStrikeThrough, font.Equalize,
+				Capture(font.Fill), Capture(font.Highlight), font.Italic, font.Kerning, font.Smallcaps,
+				font.SoftEdgeFormat, font.Spacing, font.Strike, font.StrikeThrough,
+				font.Subscript, font.Superscript, font.UnderlineStyle, font.WordArtformat
 				);
 		}
 
-		public static void Apply(Office.Font2 to, FontEmphasisSnapshot snapshot) {
-			to.Bold = snapshot.Bold;
-			to.Italic = snapshot.Italic;
-			to.Strike = snapshot.Strike;
-			to.UnderlineStyle = snapshot.UnderlineStyle;
-			to.DoubleStrikeThrough = snapshot.DoubleStrikeThrough;
-			to.Subscript = snapshot.Subscript;
-			to.Superscript = snapshot.Superscript;
+		public static void Apply(Office.Font2 to, FontSnapshot snapshot) {
 			to.Name = snapshot.Name;
 			to.Size = snapshot.Size;
+			to.Allcaps = snapshot.Allcaps;
+			to.BaselineOffset = snapshot.BaselineOffset;
+			to.Bold = snapshot.Bold;
+			to.Caps = snapshot.Caps;
+			to.DoubleStrikeThrough = snapshot.DoubleStrikeThrough;
+			to.Equalize = snapshot.Equalize;
+			Apply(to.Fill, snapshot.Fill);
+			Apply(to.Highlight, snapshot.Highlight);
+			to.Italic = snapshot.Italic;
+			to.Kerning = snapshot.Kerning;
+			to.Smallcaps = snapshot.Smallcaps;
+			to.SoftEdgeFormat = snapshot.SoftEdgeFormat;
+			to.Spacing = snapshot.Spacing;
+			to.Strike = snapshot.Strike;
+			to.StrikeThrough = snapshot.StrikeThrough;
+			to.Subscript = snapshot.Subscript;
+			to.Superscript = snapshot.Superscript;
+			to.UnderlineStyle = snapshot.UnderlineStyle;
+			if (snapshot.WordArtformat != MsoPresetTextEffect.msoTextEffectMixed) {
+				to.WordArtformat = snapshot.WordArtformat;
+			}
 		}
 
 		public static void Copy(Office.Font2 to, Office.Font2 from) {
-			to.Bold = from.Bold;
-			to.Italic = from.Italic;
-			to.Strike = from.Strike;
-			to.UnderlineStyle = from.UnderlineStyle;
-			to.DoubleStrikeThrough = from.DoubleStrikeThrough;
-			to.Subscript = from.Subscript;
-			to.Superscript = from.Superscript;
-			to.Name = from.Name;
-			to.Size = from.Size;
+			Apply(to, Capture(from));
 		}
 		#endregion
 
@@ -323,11 +483,11 @@ namespace hztoolbar {
 		public class CharacterRangeSnapshot {
 			public readonly int Start;
 			public readonly int Length;
-			public readonly FontEmphasisSnapshot Emphasis;
+			public readonly FontSnapshot Font;
 			public readonly ImmutableList<CharacterRangeSnapshot> Runs;
 
-			public CharacterRangeSnapshot(FontEmphasisSnapshot emphasis, IEnumerable<CharacterRangeSnapshot> runs) {
-				this.Emphasis = emphasis;
+			public CharacterRangeSnapshot(FontSnapshot font, IEnumerable<CharacterRangeSnapshot> runs) {
+				this.Font = font;
 				this.Runs = runs.ToImmutableList();
 			}
 		}
@@ -342,7 +502,7 @@ namespace hztoolbar {
 		}
 
 		public static void ApplyCharacters(Office.TextRange2 to, CharacterRangeSnapshot snapshot) {
-			Apply(to.Font, snapshot.Emphasis);
+			Apply(to.Font, snapshot.Font);
 			foreach (var run in snapshot.Runs) {
 				ApplyCharacters(to.Characters[run.Start, run.Length], run);
 			}
@@ -374,6 +534,7 @@ namespace hztoolbar {
 			foreach (var run in runs) {
 				run.Delete();
 			}
+			range.Font.Highlight.ObjectThemeColor = MsoThemeColorIndex.msoThemeColorDark1;
 		}
 
 		public class ParagraphRangeSnapshot {
@@ -406,24 +567,20 @@ namespace hztoolbar {
 		}
 
 		public static void CopyParagraph(Office.TextRange2 to, Office.TextRange2 from) {
-			if (from.Paragraphs.Count > 1) {
-				for (var i = 0; i < from.Paragraphs.Count; ++i) {
-					CopyParagraph(to.Paragraphs[i + 1], from.Paragraphs[i + 1]);
-				}
-			} else {
-				Copy(to.ParagraphFormat, from.ParagraphFormat);
-			}
+			ApplyParagraph(to, CaptureParagraph(from));
 		}
 		#endregion
 
 		#region TextFrame2
 		public class TextFrameSnapshot {
 			public readonly string Text;
+			public readonly ParagraphFormatSnapshot ParagraphFormat;
 			public readonly CharacterRangeSnapshot CharacterRange;
 			public readonly ParagraphRangeSnapshot ParagraphRange;
 
-			public TextFrameSnapshot(string text, CharacterRangeSnapshot characterRange, ParagraphRangeSnapshot paragraphRange) {
+			public TextFrameSnapshot(string text, ParagraphFormatSnapshot paragraphFormat, CharacterRangeSnapshot characterRange, ParagraphRangeSnapshot paragraphRange) {
 				this.Text = text;
+				this.ParagraphFormat = paragraphFormat;
 				this.CharacterRange = characterRange;
 				this.ParagraphRange = paragraphRange;
 			}
@@ -433,6 +590,7 @@ namespace hztoolbar {
 		public static TextFrameSnapshot Capture(PowerPoint.TextFrame2 frame) {
 			return new TextFrameSnapshot(
 				frame.TextRange.Text,
+				Capture(frame.TextRange.ParagraphFormat),
 				CaptureCharacters(frame.TextRange),
 				CaptureParagraph(frame.TextRange)
 				);
@@ -441,15 +599,13 @@ namespace hztoolbar {
 		public static void Apply(PowerPoint.TextFrame2 to, TextFrameSnapshot snapshot) {
 			ClearCharacters(to.TextRange);
 			to.TextRange.Text = snapshot.Text;
+			Apply(to.TextRange.ParagraphFormat, snapshot.ParagraphFormat);
 			ApplyCharacters(to.TextRange, snapshot.CharacterRange);
 			ApplyParagraph(to.TextRange, snapshot.ParagraphRange);
 		}
 
 		public static void Copy(PowerPoint.TextFrame2 to, PowerPoint.TextFrame2 from) {
-			ClearCharacters(to.TextRange);
-			to.TextRange.Text = from.TextRange.Text;
-			CopyCharacters(to.TextRange, from.TextRange);
-			CopyParagraph(to.TextRange, from.TextRange);
+			Apply(to, Capture(from));
 		}
 		#endregion
 

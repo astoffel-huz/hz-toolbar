@@ -3,6 +3,7 @@
 using hztoolbar.Properties;
 using Microsoft.Office.Interop.PowerPoint;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -36,12 +37,21 @@ namespace hztoolbar.actions {
 
 		public override bool Run(string arg = "") {
 			var textShapes = GetSelectedShapes().ToList();
-			if (textShapes.Count > 1) {
-				var snapshot = Utils.Capture(textShapes[textShapes.Count - 1].TextFrame2);
+			var slide = Utils.GetActiveSlide();
+			if (textShapes.Count > 1 && slide != null) {
+				var snapshot = slide.Shapes.AddShape(Office.MsoAutoShapeType.msoShapeRectangle, 0, 0, 0, 0);
+				textShapes[textShapes.Count - 1].PickUp();
+				snapshot.Apply();
+				Utils.Copy(snapshot.TextFrame2, textShapes[textShapes.Count - 1].TextFrame2);
 				for (var i = textShapes.Count - 1; i > 0; --i) {
+					textShapes[i - 1].PickUp();
+					textShapes[i].Apply();
 					Utils.Copy(textShapes[i].TextFrame2, textShapes[i - 1].TextFrame2);
 				}
-				Utils.Apply(textShapes[0].TextFrame2, snapshot);
+				snapshot.PickUp();
+				textShapes[0].Apply();
+				Utils.Copy(textShapes[0].TextFrame2, snapshot.TextFrame2);
+				snapshot.Delete();
 			}
 			return false;
 		}
@@ -72,29 +82,111 @@ namespace hztoolbar.actions {
 
 			var selection = activeWindow.Selection;
 
-			return selection.Type == PpSelectionType.ppSelectionText ? selection : null;
+			return selection.Type == PpSelectionType.ppSelectionText || selection.Type == PpSelectionType.ppSelectionShapes ? selection : null;
 		}
 
 		public override bool IsEnabled(string arg = "") {
 			return GetSelection() != null;
 		}
 
+		private Shape? SliceShape(Shape shape, int start, int end) {
+			var slice = shape.Duplicate()[1];
+			if (slice != null) {
+				var duplicateRange = slice.TextFrame2.TextRange;
+				if (end <= duplicateRange.Length) {
+					duplicateRange.Characters[end, duplicateRange.Length - end + 1].Delete();
+				}
+				if (start > 1) {
+					duplicateRange.Characters[1, start - 1].Delete();
+				}
+			}
+			return slice;
+
+		}
+
+		private void SplitAtCaret(Selection selection) {
+			foreach (Shape shape in selection.ShapeRange) {
+				var start = selection.TextRange2.Start;
+				var shapeRange = shape.TextFrame2.TextRange;
+				if (start <= shapeRange.Length) {
+					var duplicate = SliceShape(shape, start, shapeRange.Length + 1);
+					if (duplicate == null) {
+						continue;
+					}
+					shapeRange.Characters[start, shapeRange.Length - start + 1].Delete();
+					shape.Height = shape.Height / 2.0f - Properties.Settings.Default.arrange_vertical_gutter / 2.0f;
+					duplicate.Left = shape.Left;
+					duplicate.Top = shape.Top + shape.Height + Properties.Settings.Default.arrange_vertical_gutter;
+					duplicate.Height = shape.Height;
+				}
+			}
+		}
+
+		private int IndexOfNextLine(Shape shape) {
+			if (
+				shape.HasTextFrame != Office.MsoTriState.msoTrue
+				&& shape.HasTextFrame != Office.MsoTriState.msoCTrue
+				) {
+				return -1;
+			}
+			var text = shape.TextFrame2.TextRange.Text;
+			var indexOfWindows = text.IndexOf("\r\n");
+			var indexOfUnix = text.IndexOf("\n");
+			var indexOfMac = text.IndexOf("\r");
+			var result = -1;
+			if (indexOfWindows > -1) {
+				result = result > 0 ? Math.Min(result, indexOfWindows + 2) : indexOfWindows + 2;
+			}
+			if (indexOfUnix > -1) {
+				result = result > 0 ? Math.Min(result, indexOfUnix + 1) : indexOfUnix + 1;
+			}
+			if (indexOfMac > -1) {
+				result = result > 0 ? Math.Min(result, indexOfMac + 1) : indexOfMac + 1;
+			}
+			return result;
+		}
+
+		private void SplitAtNewline(Shape shape) {
+			var slices = new List<Shape>();
+			for (
+				var index = IndexOfNextLine(shape);
+				index >= 0;
+				index = IndexOfNextLine(shape)
+				) {
+				var slice = SliceShape(shape, 1, index);
+				if (slice == null) {
+					break;
+				}
+				slices.Add(slice);
+				shape.TextFrame2.TextRange.Characters[1, index].Delete();
+			}
+			if (slices.Count > 0) {
+				slices.Add(shape);
+				var height = Math.Max(1, (shape.Height - Properties.Settings.Default.arrange_vertical_gutter * (slices.Count - 1)) / slices.Count);
+				var top = shape.Top;
+				var left = shape.Left;
+				foreach (var slice in slices) {
+					slice.Top = top;
+					slice.Left = left;
+					slice.Height = height;
+					top += height + Properties.Settings.Default.arrange_vertical_gutter;
+				}
+			}
+		}
+
 		public override bool Run(string arg = "") {
 			var selection = GetSelection();
 			if (selection != null) {
-				foreach (Shape shape in selection.ShapeRange) {
-					var start = selection.TextRange2.Start;
-					var shapeRange = shape.TextFrame2.TextRange;
-					if (start < shapeRange.Length) {
-						var duplicate = shape.Duplicate();
-						var duplicateRange = duplicate.TextFrame2.TextRange;
-						shapeRange.Characters[start, shapeRange.Length - start + 1].Delete();
-						duplicateRange.Characters[1, start - 1].Delete();
-						shape.Height = shape.Height / 2.0f - Properties.Settings.Default.arrange_vertical_gutter / 2.0f;
-						duplicate.Left = shape.Left;
-						duplicate.Top = shape.Top + shape.Height + Properties.Settings.Default.arrange_vertical_gutter;
-						duplicate.Height = shape.Height;
-					}
+				switch (selection.Type) {
+					case PpSelectionType.ppSelectionShapes:
+						foreach (Shape shape in selection.ShapeRange) {
+							SplitAtNewline(shape);
+						}
+						break;
+
+					case PpSelectionType.ppSelectionText:
+						SplitAtCaret(selection);
+						break;
 				}
 			}
 			return true;
@@ -227,8 +319,8 @@ namespace hztoolbar.actions {
 
 		public override bool Run(string arg = "") {
 			if (VALID_ARGUMENTS.Contains(arg)) {
-				var margin = GetMargin(arg);
-				ChangeMargins(GetSelectedShapes(), margin.top, margin.left, margin.bottom, margin.right);
+				var (top, left, bottom, right) = GetMargin(arg);
+				ChangeMargins(GetSelectedShapes(), top, left, bottom, right);
 			}
 			return false;
 		}
