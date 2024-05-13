@@ -534,7 +534,6 @@ namespace hztoolbar {
 			foreach (var run in runs) {
 				run.Delete();
 			}
-			range.Font.Highlight.ObjectThemeColor = MsoThemeColorIndex.msoThemeColorDark1;
 		}
 
 		public class ParagraphRangeSnapshot {
