@@ -815,7 +815,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:H&Z Toolbar"
         "ProductCode" = "8:{8531C9E6-4F73-4399-9ACA-FFDB978858DE}"
-        "PackageCode" = "8:{685E9EA6-7EFB-45D3-9A25-87FE33686417}"
+        "PackageCode" = "8:{F8158781-A2C8-44D3-AC44-227381DA94DE}"
         "UpgradeCode" = "8:{E18E2347-597C-4454-BA9F-62239D5FD0C9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -838,7 +838,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:\"C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\signtool.exe\"  sign /a \"$(BuiltOuputPath)\""
+        "PostBuildEvent" = "8:\"C:\\Program Files (x86)\\Microsoft SDKs\\ClickOnce\\SignTool\\signtool.exe\"  sign /a \"$(BuiltOuputPath)\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
